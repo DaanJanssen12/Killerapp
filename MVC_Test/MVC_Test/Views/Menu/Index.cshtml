@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Menu";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <h2>Menu</h2>
+    <ul>
+        <li><input name="submit" type="submit" value="@ViewBag.C1" /></li>
+        <li><input name="submit" type="submit" value="@ViewBag.C2" /></li>
+        <li><input name="submit" type="submit" value="@ViewBag.C3" /></li>
+    </ul>
+}
+
+
+
+

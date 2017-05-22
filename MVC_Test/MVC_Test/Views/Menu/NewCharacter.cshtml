@@ -1,0 +1,40 @@
+﻿@model MVC_Test.Models.Character
+
+@{
+    ViewBag.Title = "NewCharacter";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <h2>NewCharacter</h2>
+
+    <fieldset>
+        <p>
+            @Html.LabelFor(c => c.Name)
+            @Html.TextBoxFor(c => c.Name)
+        </p>
+
+        <p>
+            @Html.LabelFor(c => c.Class)
+            @Html.DropDownList("Class")
+        </p>
+
+        <p>
+            @Html.LabelFor(c => c.Gender)
+            @Html.RadioButtonFor(c => c.Gender, "Male") Male
+            @Html.RadioButtonFor(c => c.Gender, "Female") Female
+        </p>
+
+        <input name="submit" type="submit" value="Create Character" />
+
+    </fieldset>
+
+}
+
+
+
+
+
+
+

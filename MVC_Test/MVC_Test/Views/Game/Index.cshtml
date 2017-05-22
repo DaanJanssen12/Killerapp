@@ -1,0 +1,64 @@
+﻿@model MVC_Test.Models.Character
+
+@{
+    ViewBag.Title = "Game";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<h2>Game</h2>
+
+<div class="container">
+    <div class="col-md-6">
+        <div class="Stats">
+            <h3>Stats:</h3>
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td>@Model.Name</td>
+                </tr>
+                <tr>
+                    <td>Class</td>
+                    <td>@Model.Class</td>
+                </tr>
+                <tr>
+                    <td>LVL</td>
+                    <td>@Model.Lvl</td>
+                </tr>
+                <tr>
+                    <td>HP</td>
+                    <td>@Model.HP</td>
+                </tr>
+                <tr>
+                    <td>Atk</td>
+                    <td>@Model.Atk</td>
+                </tr>
+                <tr>
+                    <td>Def</td>
+                    <td>@Model.Def</td>
+                </tr>
+                <tr>
+                    <td>SpAtk</td>
+                    <td>@Model.SpAtk</td>
+                </tr>
+                <tr>
+                    <td>SpDef</td>
+                    <td>@Model.SpDef</td>
+                </tr>
+                <tr>
+                    <td>Spe</td>
+                    <td>@Model.Spe</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3>Bag:</h3>
+        @foreach (MVC_Test.Models.Item item in Model.bag)
+        {
+            <p>@item.Name</p>
+        }
+    </div>
+</div>
+
+
+
