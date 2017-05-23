@@ -4,85 +4,88 @@
     ViewBag.Title = "Battle";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-<div class="container">
-    <h2>Battle - You vs @Model.Enemy.Type - lvl @Model.Enemy.Lvl</h2>
-    <div class="row">
-        <div class="Enemy">
-            <div class="Character">
-                <div class="HP">
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" aria-valuenow="@Model.Enemy.HP"
-                             aria-valuemin="0" aria-valuemax="@Model.Enemy.HP" style="width:80%">
-                            @Model.Enemy.HP
+
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <h2>Battle - You vs a lvl @Model.Enemy.Lvl @Model.Enemy.Type </h2>
+        <div class="row">
+            <div class="Enemy">
+                <div class="Character">
+                    <div class="HP">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="@Model.EnemyHP"
+                                 aria-valuemin="0" aria-valuemax="@Model.Enemy.HP" style="width:80%">
+                                @Model.Enemy.HP
+                            </div>
                         </div>
                     </div>
+                    <img src="~/Content/dragon.png" />
                 </div>
-                <img src="~/Content/dragon.png"/>
             </div>
         </div>
-     </div>
-     <div class="row">
-         <div class="You">
-             <div class="Character">
-                 <div class="HP">
-                     <div class="progress">
-                         <div class="progress-bar" role="progressbar" aria-valuenow="@Model.You.HP"
-                              aria-valuemin="0" aria-valuemax="@Model.You.HP" style="width:80%">
-                             @Model.You.HP
-                         </div>
-                     </div>
-                 </div>
-                 <img src="~/Content/warrior.png" alt="You" />
-             </div>
-         </div>
-     </div>
-     <div class="row">
-         <div class="Menu">
-             <div class="Attacks">
-                 <div class="Attack1">
-                     <input type="submit" name="submit" value="@Model.You.Moves[0].Name" style="width:100%; height:100%;" />
-                 </div>
-                 <div class="Attack2">
-                     @if (Model.You.Moves.Count > 1)
-                     {
-                        <input type="submit" name="submit" value="@Model.You.Moves[1].Name" style="width:100%; height:100%;"/>
-                     }
-                     else
-                     {
-                         <p>---</p>
-                     }
-                 </div>
-                 <div class="Attack3">
-                     @if (Model.You.Moves.Count > 2)
-                     {
-                        <input type="submit" name="submit" value="@Model.You.Moves[2].Name" style="width:100%; height:100%;" />
-                     }
-                     else
-                     {
-                        <p>---</p>
-                     }
-                 </div>
-                 <div class="Attack4">
-                     @if (Model.You.Moves.Count > 3)
-                     {
-                        <input type="submit" name="submit" value="@Model.You.Moves[3].Name" style="width:100%; height:100%;" />
-                     }
-                     else
-                     {
-                        <p>---</p>
-                     }
-                 </div>
-             </div>
-             <div class="Battlelog">
-                 <p>Battlelog</p>
-             </div>
-             <div class="Bag">
-                 <input type="submit" name="submit" value="Bag" style="width:100%; height:100%;" />
-             </div>
-             <div class="Run">
-                 <input type="submit" name="submit" value="Run" style="width:100%; height:100%;" />
-             </div>
-         </div>
-     </div>
-</div>
-
+        <div class="row">
+            <div class="You">
+                <div class="Character">
+                    <div class="HP">
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="@Model.YourHP"
+                                 aria-valuemin="0" aria-valuemax="@Model.You.HP" style="width:80%">
+                                @Model.You.HP
+                            </div>
+                        </div>
+                    </div>
+                    <img src="~/Content/warrior.png" alt="You" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="Menu">
+                <div class="Attacks">
+                    <div class="Attack1">
+                        <input type="submit" name="submit" value="@Model.You.Moves[0].Name" style="width:100%; height:100%;" />
+                    </div>
+                    <div class="Attack2">
+                        @if (Model.You.Moves.Count > 1)
+                        {
+                            <input type="submit" name="submit" value="@Model.You.Moves[1].Name" style="width:100%; height:100%;" />
+                        }
+                        else
+                        {
+                            <p>---</p>
+                        }
+                    </div>
+                    <div class="Attack3">
+                        @if (Model.You.Moves.Count > 2)
+                        {
+                            <input type="submit" name="submit" value="@Model.You.Moves[2].Name" style="width:100%; height:100%;" />
+                        }
+                        else
+                        {
+                            <p>---</p>
+                        }
+                    </div>
+                    <div class="Attack4">
+                        @if (Model.You.Moves.Count > 3)
+                        {
+                            <input type="submit" name="submit" value="@Model.You.Moves[3].Name" style="width:100%; height:100%;" />
+                        }
+                        else
+                        {
+                            <p>---</p>
+                        }
+                    </div>
+                </div>
+                <div class="Battlelog">
+                    <p>Battlelog</p>
+                </div>
+                <div class="Bag">
+                    <input type="submit" name="submit" value="Bag" style="width:100%; height:100%;" />
+                </div>
+                <div class="Run">
+                    <input type="submit" name="submit" value="Run" style="width:100%; height:100%;" />
+                </div>
+            </div>
+        </div>
+    </div>
+}

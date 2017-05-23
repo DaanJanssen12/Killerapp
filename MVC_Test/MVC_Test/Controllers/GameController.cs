@@ -11,6 +11,7 @@ namespace MVC_Test.Controllers
     {
         ISql sql = new Sql();
         Character character;
+        Battle battle;
         // GET: Game
         public ActionResult Index()
         {
@@ -22,9 +23,10 @@ namespace MVC_Test.Controllers
             return View(character);
         }
 
+        [HttpGet]
         public ActionResult Battle()
         {
-            Character character = (Character)TempData["Character"];
+            character = (Character)TempData["Character"];
             Random rng = new Random();
             int minLvl = 1;
             if (character.Lvl > 2)
@@ -34,7 +36,28 @@ namespace MVC_Test.Controllers
             int lvl = rng.Next(minLvl, character.Lvl + 2);
             string type = Enum.GetName(typeof(Types), rng.Next(0, 3));
             EvilCreature enemy = new EvilCreature(lvl, type);
-            Battle battle = new Battle(character, enemy);
+            battle = new Battle(character, enemy);
+            TempData["Battle"] = battle;
+            return View(battle);
+        }
+
+        [HttpPost]
+        public ActionResult Battle(string submit)
+        {
+            battle = (Battle)TempData["Battle"];
+            foreach(Move move in battle.You.Moves)
+            {
+                if (submit == move.Name)
+                {
+                    battle.EnemyHP = battle.EnemyHP - battle.DamageCalc(battle.You, battle.Enemy, move);
+                }
+                else if (submit == "Run")
+                {
+                    TempData["Character"] = battle.You;
+                    return RedirectToAction("Index", "Game");
+                }
+            }
+            TempData["Battle"] = battle;
             return View(battle);
         }
     }

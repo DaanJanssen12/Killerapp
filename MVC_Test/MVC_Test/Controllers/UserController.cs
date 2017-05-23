@@ -24,7 +24,7 @@ namespace MVC_Test.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(Models.User user)
+        public ActionResult Login(User user)
         {
             if (sql.Login(user.UserName, user.Password))
              {
@@ -47,7 +47,7 @@ namespace MVC_Test.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(Models.User user)
+        public ActionResult Register(User user)
         {
             if(user.UserName != null && user.Password != null)
             {

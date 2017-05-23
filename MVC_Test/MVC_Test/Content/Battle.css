@@ -1,52 +1,52 @@
-﻿div.You {
+﻿.You {
     height: 30%;
     width: 100%;
 }
 
-div.Enemy {
+.Enemy {
     height: 30%;
     width: 100%;
 }
 
-div.Enemy div.Character {
+.Enemy .Character {
         float: right;
         margin-right: 50px;
     }
 
-div.You div.Character {
+.You .Character {
     margin-left: 5%;
 }
 
-div.Character {
+.Character {
     width: 200px;
     height: 100%;
 }
 
-div.HP {
+.HP {
     height: 30px;
     width: 80%;
 }
 
-div.Menu {
+.Menu {
     margin-left: 5%;
     margin-top: 2%;
     height: 40%;
 }
 
-div.Attacks, div.Battlelog {
+.Attacks, div.Battlelog {
     width: 35%;
     float: left;
 }
 
-div.Battlelog {
+.Battlelog {
     height:200px;
 }
-    div .Attacks input{
+.Attacks input{
     height: 100px;
     width: 150px;
 }
 
-div.Attack1, div.Attack2, div.Attack3, div.Attack4 {
+.Attack1, .Attack2, .Attack3, .Attack4 {
     height: 100px;
     width: 180px;
     float: left;
@@ -54,7 +54,7 @@ div.Attack1, div.Attack2, div.Attack3, div.Attack4 {
     border: solid black 1px;
 }
 
-div.Bag, div.Run {
+.Bag, .Run {
     height: 100px;
     width: 20%;
     margin-right: 5%;

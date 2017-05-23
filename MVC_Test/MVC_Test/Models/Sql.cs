@@ -187,6 +187,7 @@ namespace MVC_Test.Models
         {
             try
             {
+                c.bag.Clear();
                 string sql = @"Select Name, Stat, Amount, Permanent, Class, Durability
                            From Item i
                            Join Bag b on i.ItemId = b.ItemId
