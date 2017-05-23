@@ -26,8 +26,8 @@ namespace MVC_Test.Models
         {
             int totalStats = 50 + (Lvl * 5);
             Random rng = new Random();
-            int hp = rng.Next(Convert.ToInt32(totalStats / 4), Convert.ToInt32(totalStats / 2));
-            totalStats = totalStats - hp;
+            HP = rng.Next(Convert.ToInt32(totalStats / 4), Convert.ToInt32(totalStats / 2));
+            totalStats = totalStats - HP;
             Atk = CalculateStat(totalStats, rng);
             Def = CalculateStat(totalStats, rng);
             SpAtk = CalculateStat(totalStats, rng);
@@ -40,6 +40,11 @@ namespace MVC_Test.Models
             int min = Convert.ToInt32(totalStats / 6);
             int stat = rng.Next(Convert.ToInt32(totalStats / 6), Convert.ToInt32(totalStats / 4));
             return stat;
+        }
+
+        public override void LoadMoves()
+        {
+            throw new NotImplementedException();
         }
     }
 }

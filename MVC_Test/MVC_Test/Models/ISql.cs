@@ -20,6 +20,10 @@ namespace MVC_Test.Models
         //Stats
         void LoadStats(Character c);
 
+        //Bag
         void LoadBag(Character c);
+
+        //Moves
+        void LoadMoves(Character c);
     }
 }

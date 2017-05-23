@@ -43,5 +43,10 @@ namespace MVC_Test.Models
         {
             return this.Name + " - " + this.Gender + " " + this.Class;
         }
+
+        public override void LoadMoves()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

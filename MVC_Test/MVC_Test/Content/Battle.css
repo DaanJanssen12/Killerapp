@@ -20,13 +20,11 @@ div.You div.Character {
 div.Character {
     width: 200px;
     height: 100%;
-    border: solid black 1px;
 }
 
 div.HP {
     height: 30px;
     width: 80%;
-    border: solid black 1px;
 }
 
 div.Menu {
@@ -37,8 +35,15 @@ div.Menu {
 
 div.Attacks, div.Battlelog {
     width: 35%;
-    height: 100%;
     float: left;
+}
+
+div.Battlelog {
+    height:200px;
+}
+    div .Attacks input{
+    height: 100px;
+    width: 150px;
 }
 
 div.Attack1, div.Attack2, div.Attack3, div.Attack4 {

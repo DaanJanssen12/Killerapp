@@ -14,5 +14,9 @@ namespace MVC_Test.Models
         public int Spe { get; set; }
         public int HP { get; set; }
         public int Lvl { get; set; }
+
+        public List<Move> Moves = new List<Move>();
+
+        public abstract void LoadMoves();
     }
 }

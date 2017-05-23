@@ -211,5 +211,29 @@ namespace MVC_Test.Models
             catch { }
             
         }
+
+        public void LoadMoves(Character c)
+        {
+            try
+            {
+                string sql = @"SELECT Move, Power, Type FROM Moves m Join Moveset ms on m.Move = ms.Move1 or m.Move = ms.Move2 or m.Move = ms.Move3 or m.Move = ms.Move4 WHERE CharacterId = @id";
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@id", SqlDbType.Int))
+                    .Value = c.CharacterId;
+                conn.Open();
+                using(SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            c.Moves.Add(new Move(reader[0].ToString(), (Int32)reader[1], reader[2].ToString()));
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
     }
 }

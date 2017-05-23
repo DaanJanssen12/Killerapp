@@ -17,6 +17,7 @@ namespace MVC_Test.Controllers
             character = (Character)TempData["Character"];
             sql.LoadStats(character);
             sql.LoadBag(character);
+            sql.LoadMoves(character);
             TempData["Character"] = character;
             return View(character);
         }
@@ -33,8 +34,8 @@ namespace MVC_Test.Controllers
             int lvl = rng.Next(minLvl, character.Lvl + 2);
             string type = Enum.GetName(typeof(Types), rng.Next(0, 3));
             EvilCreature enemy = new EvilCreature(lvl, type);
-            TempData["Character"] = character;
-            return View(enemy);
+            Battle battle = new Battle(character, enemy);
+            return View(battle);
         }
     }
 }
