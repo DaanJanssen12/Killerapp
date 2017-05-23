@@ -1,0 +1,60 @@
+﻿div.You {
+    height: 30%;
+    width: 100%;
+}
+
+div.Enemy {
+    height: 30%;
+    width: 100%;
+}
+
+div.Enemy div.Character {
+        float: right;
+        margin-right: 50px;
+    }
+
+div.You div.Character {
+    margin-left: 5%;
+}
+
+div.Character {
+    width: 200px;
+    height: 100%;
+    border: solid black 1px;
+}
+
+div.HP {
+    height: 30px;
+    width: 80%;
+    border: solid black 1px;
+}
+
+div.Menu {
+    margin-left: 5%;
+    margin-top: 2%;
+    height: 40%;
+}
+
+div.Attacks, div.Battlelog {
+    width: 35%;
+    height: 100%;
+    float: left;
+}
+
+div.Attack1, div.Attack2, div.Attack3, div.Attack4 {
+    height: 100px;
+    width: 180px;
+    float: left;
+    text-align: center;
+    border: solid black 1px;
+}
+
+div.Bag, div.Run {
+    height: 100px;
+    width: 20%;
+    margin-right: 5%;
+    float: right;
+    text-align: center;
+    border: solid black 1px;
+    font-size: 30px;
+}

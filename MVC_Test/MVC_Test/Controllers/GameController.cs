@@ -10,10 +10,11 @@ namespace MVC_Test.Controllers
     public class GameController : Controller
     {
         ISql sql = new Sql();
+        Character character;
         // GET: Game
         public ActionResult Index()
         {
-            Character character = (Character)TempData["Character"];
+            character = (Character)TempData["Character"];
             sql.LoadStats(character);
             sql.LoadBag(character);
             TempData["Character"] = character;

@@ -4,9 +4,52 @@
     ViewBag.Title = "Battle";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-
 <div class="container">
-    <h2>Battle</h2>
-    <p>@Model.Type - lvl @Model.Lvl</p>
+    <h2>Battle - You vs @Model.Type - lvl @Model.Lvl</h2>
+    <div class="row">
+        <div class="Enemy">
+            <div class="Character">
+                <div class="HP">
+                    Hp bar
+                </div>
+            </div>
+        </div>
+     </div>
+     <div class="row">
+         <div class="You">
+             <div class="Character">
+                 <div class="HP">
+                     Hp bar
+                 </div>
+             </div>
+         </div>
+     </div>
+     <div class="row">
+         <div class="Menu">
+             <div class="Attacks">
+                 <div class="Attack1">
+                     <p>Attack1</p>
+                 </div>
+                 <div class="Attack2">
+                     <p>Attack2</p>
+                 </div>
+                 <div class="Attack3">
+                     <p>Attack3</p>
+                 </div>
+                 <div class="Attack4">
+                     <p>Attack4</p>
+                 </div>
+             </div>
+             <div class="Battlelog">
+                 <p>Battlelog</p>
+             </div>
+             <div class="Bag">
+                 <p>Bag</p>
+             </div>
+             <div class="Run">
+                 <p>Run</p>
+             </div>
+         </div>
+     </div>
 </div>
 
