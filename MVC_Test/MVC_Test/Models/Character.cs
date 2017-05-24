@@ -48,5 +48,13 @@ namespace MVC_Test.Models
         {
             throw new NotImplementedException();
         }
+
+        public void GainXP(int xp)
+        {
+            XP = XP + xp;
+            double lvl = Math.Sqrt(XP);
+            int myLvl = Convert.ToInt32(Math.Floor(lvl));
+            Lvl = myLvl;
+        }
     }
 }

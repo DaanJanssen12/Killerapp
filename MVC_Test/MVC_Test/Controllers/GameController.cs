@@ -71,6 +71,7 @@ namespace MVC_Test.Controllers
                     battle.Move(battle.You, submit);
                     if (battle.BattleWon == true)
                     {
+                        battle.You.GainXP(13);
                         return RedirectToAction("Index", "Game");
                     }
                     battle.Move(battle.Enemy);
@@ -89,6 +90,7 @@ namespace MVC_Test.Controllers
                     battle.Move(battle.You, submit);
                     if (battle.BattleWon == true)
                     {
+                        battle.You.GainXP(13);
                         return RedirectToAction("Index", "Game");
                     }
                 }
