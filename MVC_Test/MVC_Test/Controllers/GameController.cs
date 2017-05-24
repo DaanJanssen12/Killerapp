@@ -15,6 +15,10 @@ namespace MVC_Test.Controllers
         // GET: Game
         public ActionResult Index()
         {
+            if (TempData["Character"] == null)
+            {
+                return RedirectToAction("Index", "Menu");
+            }
             character = (Character)TempData["Character"];
             sql.LoadStats(character);
             sql.LoadBag(character);
@@ -26,6 +30,10 @@ namespace MVC_Test.Controllers
         [HttpGet]
         public ActionResult Battle()
         {
+            if(TempData["Character"] == null)
+            {
+                return RedirectToAction("Index", "Menu");
+            }
             character = (Character)TempData["Character"];
             Random rng = new Random();
             int minLvl = 1;
@@ -36,6 +44,7 @@ namespace MVC_Test.Controllers
             int lvl = rng.Next(minLvl, character.Lvl + 2);
             string type = Enum.GetName(typeof(Types), rng.Next(0, 3));
             EvilCreature enemy = new EvilCreature(lvl, type);
+            sql.LoadMoves(enemy);
             battle = new Battle(character, enemy);
             TempData["Battle"] = battle;
             return View(battle);
@@ -45,16 +54,43 @@ namespace MVC_Test.Controllers
         public ActionResult Battle(string submit)
         {
             battle = (Battle)TempData["Battle"];
-            foreach(Move move in battle.You.Moves)
+            if (submit == "Run")
             {
-                if (submit == move.Name)
+                TempData["Character"] = battle.You;
+                return RedirectToAction("Index", "Game");
+            }
+            else if (submit == "Bag")
+            {
+                TempData["Character"] = battle.You;
+                return RedirectToAction("Index", "Game");
+            }
+            else
+            {
+                if (battle.You.Spe > battle.Enemy.Spe)
                 {
-                    battle.EnemyHP = battle.EnemyHP - battle.DamageCalc(battle.You, battle.Enemy, move);
+                    battle.Move(battle.You, submit);
+                    if (battle.BattleWon == true)
+                    {
+                        return RedirectToAction("Index", "Game");
+                    }
+                    battle.Move(battle.Enemy);
+                    if (battle.BattleWon == false)
+                    {
+                        
+                    }
                 }
-                else if (submit == "Run")
+                else
                 {
-                    TempData["Character"] = battle.You;
-                    return RedirectToAction("Index", "Game");
+                    battle.Move(battle.Enemy);
+                    if (battle.BattleWon == false)
+                    {
+                        
+                    }
+                    battle.Move(battle.You, submit);
+                    if (battle.BattleWon == true)
+                    {
+                        return RedirectToAction("Index", "Game");
+                    }
                 }
             }
             TempData["Battle"] = battle;

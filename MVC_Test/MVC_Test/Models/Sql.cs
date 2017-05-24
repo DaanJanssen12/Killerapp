@@ -236,5 +236,29 @@ namespace MVC_Test.Models
             }
             catch { }
         }
+
+        public void LoadMoves(EvilCreature e)
+        {
+            try
+            {
+                string sql = @"SELECT TOP 4 Move, Power, Type FROM Moves WHERE Class is null and lvl < @lvl";
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@lvl", SqlDbType.Int))
+                    .Value = e.Lvl;
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            e.Moves.Add(new Move(reader[0].ToString(), (Int32)reader[1], reader[2].ToString()));
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
     }
 }

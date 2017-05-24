@@ -12,6 +12,8 @@ namespace MVC_Test.Models
 
         public int YourHP { get; set; }
         public int EnemyHP { get; set; }
+        public List<string> BattleLog;
+        public bool BattleWon { get; set; }
 
         public Battle(Character c, EvilCreature e)
         {
@@ -19,11 +21,41 @@ namespace MVC_Test.Models
             Enemy = e;
             YourHP = c.HP;
             EnemyHP = e.HP;
+            BattleLog = new List<string>();
         }
 
         public Battle()
         {
 
+        }
+
+        public void Move(Character You, string submit)
+        {
+            foreach (Move move in You.Moves)
+            {
+                if (submit == move.Name)
+                {
+                    EnemyHP = EnemyHP - DamageCalc(You, Enemy, move);
+                    if (EnemyHP <= 0)
+                    {
+                        BattleWon = true;
+                    }
+                    BattleLog.Add(You.Name + " used " + move.Name);
+                }
+            }
+        }
+
+        public void Move(EvilCreature Enemy)
+        {
+            Random rng = new Random();
+            int i = rng.Next(0, Enemy.Moves.Count);
+            Move move = Enemy.Moves[i];
+            YourHP = YourHP - DamageCalc(Enemy, You, move);
+            if (YourHP <= 0)
+            {
+                BattleWon = false;
+            }
+            BattleLog.Add("The opponent used " + move.Name);
         }
 
         public int DamageCalc(Creature offense, Creature defense, Move move)

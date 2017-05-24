@@ -25,5 +25,6 @@ namespace MVC_Test.Models
 
         //Moves
         void LoadMoves(Character c);
+        void LoadMoves(EvilCreature e);
     }
 }

@@ -53,6 +53,10 @@ namespace MVC_Test.Controllers
         [HttpPost]
         public ActionResult Index(string submit)
         {
+            if (TempData["User"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             User user = (User)TempData["User"];
 
             if (submit == "New character")
@@ -76,6 +80,10 @@ namespace MVC_Test.Controllers
         [HttpGet]
         public ActionResult NewCharacter()
         {
+            if (TempData["User"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             List<SelectListItem> items = new List<SelectListItem>();
 
             foreach(string c in Enum.GetNames(typeof(Classes)))
@@ -91,6 +99,10 @@ namespace MVC_Test.Controllers
         [HttpPost]
         public ActionResult NewCharacter(Models.Character character)
         {
+            if (TempData["User"] == null)
+            {
+                return RedirectToAction("Login", "User");
+            }
             User user = (User)TempData["User"];
             sql.CreateCharacter(user, character);
             TempData["User"] = user;
