@@ -71,7 +71,9 @@ namespace MVC_Test.Controllers
                     battle.Move(battle.You, submit);
                     if (battle.BattleWon == true)
                     {
-                        battle.You.GainXP(13);
+                        battle.You.GainXP(battle.Enemy.XpGain);
+                        battle.DropItem(sql);
+                        TempData["Character"] = battle.You;
                         return RedirectToAction("Index", "Game");
                     }
                     battle.Move(battle.Enemy);
@@ -90,7 +92,10 @@ namespace MVC_Test.Controllers
                     battle.Move(battle.You, submit);
                     if (battle.BattleWon == true)
                     {
-                        battle.You.GainXP(13);
+                        battle.You.GainXP(battle.Enemy.XpGain);
+                        battle.DropItem(sql);
+                        TempData["Character"] = battle.You;
+                        TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the " + battle.You.bag.Last().Name + " your enemy dropped.";
                         return RedirectToAction("Index", "Game");
                     }
                 }

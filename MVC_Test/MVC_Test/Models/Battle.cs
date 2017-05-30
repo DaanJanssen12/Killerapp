@@ -78,5 +78,11 @@ namespace MVC_Test.Models
             int damage = Convert.ToInt32(a*b*move.Power); 
             return damage;
         }
+
+        public void DropItem(ISql sql)
+        {
+            Random rng = new Random();
+            sql.DropBattleItem(You, rng.Next(1, 100));
+        }
     }
 }

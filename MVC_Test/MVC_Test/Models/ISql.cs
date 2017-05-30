@@ -20,6 +20,9 @@ namespace MVC_Test.Models
         //Stats
         void LoadStats(Character c);
 
+        //Item
+        void DropBattleItem(Character c, int random);
+
         //Bag
         void LoadBag(Character c);
 

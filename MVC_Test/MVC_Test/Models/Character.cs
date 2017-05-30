@@ -23,7 +23,7 @@ namespace MVC_Test.Models
         public string Gender { get; set; }
         public int XP { get; set; }
 
-        public List<Item> bag = new List<Item>();
+        public List<Item> bag;
 
         public Character(User user, int characterId, string name, string Class, string gender)
         {
@@ -32,6 +32,7 @@ namespace MVC_Test.Models
             Name = name;
             this.Class = Class;
             Gender = gender;
+            bag = new List<Item>();
         }
 
         public Character()

@@ -14,11 +14,13 @@ namespace MVC_Test.Models
     public class EvilCreature : Creature
     {
         public string Type { get; private set; }
+        public int XpGain { get; set; }
 
         public EvilCreature(int lvl, string type)
         {
             Lvl = lvl;
             Type = type;
+            XpGain = (lvl * lvl) / 4;
             this.GetStats();
         }
 

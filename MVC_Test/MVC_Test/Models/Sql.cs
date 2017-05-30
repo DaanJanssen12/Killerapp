@@ -213,6 +213,32 @@ namespace MVC_Test.Models
             
         }
 
+        public void DropBattleItem(Character c, int random)
+        {
+            try
+            {
+                string sql = @"BattleItemDrop @random, @Class, @Lvl, @CharacterId";
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@random", SqlDbType.Int))
+                    .Value = random;
+                cmd.Parameters
+                    .Add(new SqlParameter("@Class", SqlDbType.VarChar))
+                    .Value = c.Class;
+                cmd.Parameters
+                    .Add(new SqlParameter("@Lvl", SqlDbType.Int))
+                    .Value = c.Lvl;
+                cmd.Parameters
+                    .Add(new SqlParameter("@CharacterId", SqlDbType.Int))
+                    .Value = c.CharacterId;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                LoadBag(c);
+            }
+            catch
+            { }
+        }
+
         public void LoadMoves(Character c)
         {
             try
