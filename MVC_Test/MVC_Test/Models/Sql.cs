@@ -183,6 +183,40 @@ namespace MVC_Test.Models
             conn.Close();
         }
 
+        public void UpdateStats(Character c)
+        {
+            string sql = "Update Stats" +
+                "Set HP = @HP, Atk = @Atk, Def = @Def, SpAtk = @SpAtk, SpDef = @SpDef, Spe = @Spe, XP = @XP, Lvl = @Lvl" +
+                "Where CharacterId = @id";
+            var cmd = new SqlCommand(sql, conn);
+            cmd.Parameters
+                .Add(new SqlParameter("@HP", SqlDbType.Int))
+                .Value = c.HP;
+            cmd.Parameters
+                .Add(new SqlParameter("@Atk", SqlDbType.Int))
+                .Value = c.Atk;
+            cmd.Parameters
+                .Add(new SqlParameter("@Def", SqlDbType.Int))
+                .Value = c.Def;
+            cmd.Parameters
+                .Add(new SqlParameter("@SpAtk", SqlDbType.Int))
+                .Value = c.SpAtk;
+            cmd.Parameters
+                .Add(new SqlParameter("@SpDef", SqlDbType.Int))
+                .Value = c.SpDef;
+            cmd.Parameters
+                .Add(new SqlParameter("@Spe", SqlDbType.Int))
+                .Value = c.Spe;
+            cmd.Parameters
+                .Add(new SqlParameter("@XP", SqlDbType.Int))
+                .Value = c.XP;
+            cmd.Parameters
+                .Add(new SqlParameter("@Lvl", SqlDbType.Int))
+                .Value = c.Lvl;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+
         public void LoadBag(Character c)
         {
             try
@@ -233,7 +267,6 @@ namespace MVC_Test.Models
                     .Value = c.CharacterId;
                 conn.Open();
                 cmd.ExecuteNonQuery();
-                LoadBag(c);
             }
             catch
             { }

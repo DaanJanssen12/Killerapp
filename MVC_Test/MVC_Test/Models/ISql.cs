@@ -19,6 +19,7 @@ namespace MVC_Test.Models
 
         //Stats
         void LoadStats(Character c);
+        void UpdateStats(Character c);
 
         //Item
         void DropBattleItem(Character c, int random);

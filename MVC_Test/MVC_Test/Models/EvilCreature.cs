@@ -43,10 +43,5 @@ namespace MVC_Test.Models
             int stat = rng.Next(Convert.ToInt32(totalStats / 6), Convert.ToInt32(totalStats / 4));
             return stat;
         }
-
-        public override void LoadMoves()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -14,6 +14,7 @@ namespace MVC_Test.Models
         public int EnemyHP { get; set; }
         public List<string> BattleLog;
         public bool BattleWon { get; set; }
+        public bool BattleLost { get; set; }
 
         public Battle(Character c, EvilCreature e)
         {
@@ -53,7 +54,7 @@ namespace MVC_Test.Models
             YourHP = YourHP - DamageCalc(Enemy, You, move);
             if (YourHP <= 0)
             {
-                BattleWon = false;
+                BattleLost = true;
             }
             BattleLog.Add("The opponent used " + move.Name);
         }

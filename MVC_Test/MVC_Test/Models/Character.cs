@@ -45,17 +45,60 @@ namespace MVC_Test.Models
             return this.Name + " - " + this.Gender + " " + this.Class;
         }
 
-        public override void LoadMoves()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GainXP(int xp)
+        public void GainXP(int xp, ISql sql)
         {
             XP = XP + xp;
             double lvl = Math.Sqrt(XP);
             int myLvl = Convert.ToInt32(Math.Floor(lvl));
-            Lvl = myLvl;
+            if (myLvl > Lvl)
+            {
+                int levels = myLvl - Lvl;
+                Lvl = myLvl;
+                LvlUp(levels);
+            }
+            sql.UpdateStats(this);
+        }
+
+        public void LvlUp(int amount)
+        {
+            switch (Class)
+            {
+                case "Mage":
+                    HP = HP + (3*amount);
+                    Atk = Atk + (1*amount);
+                    Def = Def + (2*amount);
+                    SpAtk = SpAtk + (4*amount);
+                    SpDef = SpDef + (2*amount);
+                    Spe = Spe + (3*amount);
+                    break;
+
+                case "Warior":
+                    HP = HP + (5 * amount);
+                    Atk = Atk + (3 * amount);
+                    Def = Def + (2 * amount);
+                    SpAtk = SpAtk + (1 * amount);
+                    SpDef = SpDef + (1 * amount);
+                    Spe = Spe + (3 * amount);
+                    break;
+
+                case "Hunter":
+                    HP = HP + (2 * amount);
+                    Atk = Atk + (4 * amount);
+                    Def = Def + (2 * amount);
+                    SpAtk = SpAtk + (1 * amount);
+                    SpDef = SpDef + (2 * amount);
+                    Spe = Spe + (4 * amount);
+                    break;
+
+                case "Druid":
+                    HP = HP + (6 * amount);
+                    Atk = Atk + (0 * amount);
+                    Def = Def + (3 * amount);
+                    SpAtk = SpAtk + (2 * amount);
+                    SpDef = SpDef + (3 * amount);
+                    Spe = Spe + (1 * amount);
+                    break;
+            }
         }
     }
 }

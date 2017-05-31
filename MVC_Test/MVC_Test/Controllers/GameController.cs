@@ -71,28 +71,34 @@ namespace MVC_Test.Controllers
                     battle.Move(battle.You, submit);
                     if (battle.BattleWon == true)
                     {
-                        battle.You.GainXP(battle.Enemy.XpGain);
+                        battle.You.GainXP(battle.Enemy.XpGain, sql);
                         battle.DropItem(sql);
+                        sql.LoadBag(battle.You);
                         TempData["Character"] = battle.You;
+                        TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the " + battle.You.bag.Last().Name + " your enemy dropped.";
                         return RedirectToAction("Index", "Game");
                     }
                     battle.Move(battle.Enemy);
-                    if (battle.BattleWon == false)
+                    if (battle.BattleLost == true)
                     {
-                        
+                        TempData["Character"] = battle.You;
+                        TempData["BattleMessage"] = "You lost.";
+                        return RedirectToAction("Index", "Game");
                     }
                 }
                 else
                 {
                     battle.Move(battle.Enemy);
-                    if (battle.BattleWon == false)
+                    if (battle.BattleLost == true)
                     {
-                        
+                        TempData["Character"] = battle.You;
+                        TempData["BattleMessage"] = "You lost.";
+                        return RedirectToAction("Index", "Game");
                     }
                     battle.Move(battle.You, submit);
                     if (battle.BattleWon == true)
                     {
-                        battle.You.GainXP(battle.Enemy.XpGain);
+                        battle.You.GainXP(battle.Enemy.XpGain, sql);
                         battle.DropItem(sql);
                         TempData["Character"] = battle.You;
                         TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the " + battle.You.bag.Last().Name + " your enemy dropped.";

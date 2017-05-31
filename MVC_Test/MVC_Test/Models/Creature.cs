@@ -17,6 +17,5 @@ namespace MVC_Test.Models
 
         public List<Move> Moves = new List<Move>();
 
-        public abstract void LoadMoves();
     }
 }
