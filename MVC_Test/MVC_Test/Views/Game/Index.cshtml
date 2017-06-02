@@ -55,7 +55,15 @@
         <h3>Bag:</h3>
         @foreach (MVC_Test.Models.Item item in Model.bag)
         {
-            <p>@item.Name</p>
+            if (item.Permanent == true)
+            {
+                <p>@item.Name - Durability: @item.Durability</p>
+            }
+            else if (item.Permanent == false)
+            {
+                <p>@item.Name - Amount: @item.Durability</p>
+            }
+
         }
     </div>
 </div>

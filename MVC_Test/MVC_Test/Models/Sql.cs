@@ -185,9 +185,9 @@ namespace MVC_Test.Models
 
         public void UpdateStats(Character c)
         {
-            string sql = "Update Stats" +
+            string sql = "Update Stats " +
                 "Set HP = @HP, Atk = @Atk, Def = @Def, SpAtk = @SpAtk, SpDef = @SpDef, Spe = @Spe, XP = @XP, Lvl = @Lvl" +
-                "Where CharacterId = @id";
+                " Where CharacterId = @id";
             var cmd = new SqlCommand(sql, conn);
             cmd.Parameters
                 .Add(new SqlParameter("@HP", SqlDbType.Int))
@@ -213,19 +213,23 @@ namespace MVC_Test.Models
             cmd.Parameters
                 .Add(new SqlParameter("@Lvl", SqlDbType.Int))
                 .Value = c.Lvl;
+            cmd.Parameters
+                .Add(new SqlParameter("@id", SqlDbType.Int))
+                .Value = c.CharacterId;
             conn.Open();
             cmd.ExecuteNonQuery();
+            conn.Close();
         }
 
         public void LoadBag(Character c)
         {
+            c.bag.Clear();
             try
             {
-                c.bag.Clear();
-                string sql = @"Select Name, Stat, Amount, Permanent, Class, Durability
-                           From Item i
-                           Join Bag b on i.ItemId = b.ItemId
-                           Where b.CharacterId = @id";
+                string sql ="Select Name, Stat, Amount, Permanent, Durability"+
+                           " From Item i"+
+                           " Join Bag b on i.ItemId = b.ItemId"+
+                           " Where b.CharacterId = @id";
                 var cmd = new SqlCommand(sql, conn);
                 cmd.Parameters
                     .Add(new SqlParameter("@id", SqlDbType.Int))
@@ -237,7 +241,7 @@ namespace MVC_Test.Models
                     {
                         while (reader.Read())
                         {
-                            c.bag.Add(new Item(reader[0].ToString(), reader[1].ToString(), Convert.ToInt32(reader[2]), Convert.ToBoolean(reader[3]), reader[4].ToString(), Convert.ToInt32(reader[5])));
+                            c.bag.Add(new Item(reader[0].ToString(), reader[1].ToString(), Convert.ToInt32(reader[2]), Convert.ToBoolean(reader[3]), Convert.ToInt32(reader[4])));
                         }
                     }
                 }
@@ -267,6 +271,7 @@ namespace MVC_Test.Models
                     .Value = c.CharacterId;
                 conn.Open();
                 cmd.ExecuteNonQuery();
+                conn.Close();
             }
             catch
             { }

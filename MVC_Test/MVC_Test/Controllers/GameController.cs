@@ -15,26 +15,27 @@ namespace MVC_Test.Controllers
         // GET: Game
         public ActionResult Index()
         {
-            if (TempData["Character"] == null)
+            if (Session["Character"] == null)
             {
                 return RedirectToAction("Index", "Menu");
             }
-            character = (Character)TempData["Character"];
+            character = (Character)Session["Character"];
             sql.LoadStats(character);
             sql.LoadBag(character);
+            int count = character.bag.Count;
             sql.LoadMoves(character);
-            TempData["Character"] = character;
+            Session["Character"] = character;
             return View(character);
         }
 
         [HttpGet]
         public ActionResult Battle()
         {
-            if(TempData["Character"] == null)
+            if(Session["Character"] == null)
             {
                 return RedirectToAction("Index", "Menu");
             }
-            character = (Character)TempData["Character"];
+            character = (Character)Session["Character"];
             Random rng = new Random();
             int minLvl = 1;
             if (character.Lvl > 2)
@@ -71,11 +72,11 @@ namespace MVC_Test.Controllers
                     battle.Move(battle.You, submit);
                     if (battle.BattleWon == true)
                     {
-                        battle.You.GainXP(battle.Enemy.XpGain, sql);
+                        character = (Character)Session["Character"];
+                        character.GainXP(battle.Enemy.XpGain, sql);
                         battle.DropItem(sql);
-                        sql.LoadBag(battle.You);
-                        TempData["Character"] = battle.You;
-                        TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the " + battle.You.bag.Last().Name + " your enemy dropped.";
+                        sql.LoadBag(character);
+                        TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the " + character.bag.Last().Name + " your enemy dropped.";
                         return RedirectToAction("Index", "Game");
                     }
                     battle.Move(battle.Enemy);

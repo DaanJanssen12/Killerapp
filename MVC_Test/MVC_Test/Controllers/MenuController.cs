@@ -69,7 +69,7 @@ namespace MVC_Test.Controllers
                 {
                     if(submit == c.ToString())
                     {
-                        TempData["Character"] = c;
+                        Session["Character"] = c;
                         return RedirectToAction("Index", "Game");
                     }
                 }

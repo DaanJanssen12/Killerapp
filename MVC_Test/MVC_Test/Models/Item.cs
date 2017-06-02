@@ -11,16 +11,14 @@ namespace MVC_Test.Models
         public string Stat { get; private set; }
         public int Amount { get; private set; }
         public bool Permanent { get; private set; }
-        public string Class { get; private set; }
         public int Durability { get; private set; }
 
-        public Item(string name, string stat, int amount, bool permanent, string Class, int durability)
+        public Item(string name, string stat, int amount, bool permanent, int durability)
         {
             Name = name;
             Stat = stat;
             Amount = amount;
             Permanent = permanent;
-            this.Class = Class;
             Durability = durability;
         }
     }
