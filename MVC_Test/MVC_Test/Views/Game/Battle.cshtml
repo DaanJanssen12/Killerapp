@@ -77,10 +77,15 @@
                     </div>
                 </div>
                 <div class="Battlelog">
-                    @foreach(string s in Model.BattleLog)
+                    @if (Model.BattleLog.Count != 0)
                     {
-                        <p>@s</p>
+                        <h3>Last turn:</h3>
+                        for (int i = Model.BattleLog.Count - 2; i < Model.BattleLog.Count; i++)
+                        {
+                            <p>@Model.BattleLog[i]</p>
+                        }
                     }
+                    
                 </div>
                 <div class="Bag">
                     <input type="submit" name="submit" value="Bag" style="width:100%; height:100%;" />

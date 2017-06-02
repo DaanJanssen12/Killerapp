@@ -19,6 +19,7 @@ namespace MVC_Test.Controllers
             {
                 return RedirectToAction("Index", "Menu");
             }
+            Session["Battle"] = null;
             character = (Character)Session["Character"];
             sql.LoadStats(character);
             sql.LoadBag(character);
@@ -35,26 +36,33 @@ namespace MVC_Test.Controllers
             {
                 return RedirectToAction("Index", "Menu");
             }
-            character = (Character)Session["Character"];
-            Random rng = new Random();
-            int minLvl = 1;
-            if (character.Lvl > 2)
+            if (Session["Battle"] != null)
             {
-                minLvl = character.Lvl - 2;
+                battle = (Battle)Session["Battle"];
             }
-            int lvl = rng.Next(minLvl, character.Lvl + 2);
-            string type = Enum.GetName(typeof(Types), rng.Next(0, 3));
-            EvilCreature enemy = new EvilCreature(lvl, type);
-            sql.LoadMoves(enemy);
-            battle = new Battle(character, enemy);
-            TempData["Battle"] = battle;
+            else
+            {
+                character = (Character)Session["Character"];
+                Random rng = new Random();
+                int minLvl = 1;
+                if (character.Lvl > 2)
+                {
+                    minLvl = character.Lvl - 2;
+                }
+                int lvl = rng.Next(minLvl, character.Lvl + 2);
+                string type = Enum.GetName(typeof(Types), rng.Next(0, 3));
+                EvilCreature enemy = new EvilCreature(lvl, type);
+                sql.LoadMoves(enemy);
+                battle = new Battle(character, enemy);
+                Session["Battle"] = battle;
+            }
             return View(battle);
-        }
 
+        }
         [HttpPost]
         public ActionResult Battle(string submit)
         {
-            battle = (Battle)TempData["Battle"];
+            battle = (Battle)Session["Battle"];
             if (submit == "Run")
             {
                 TempData["Character"] = battle.You;
@@ -63,7 +71,11 @@ namespace MVC_Test.Controllers
             else if (submit == "Bag")
             {
                 TempData["Character"] = battle.You;
-                return RedirectToAction("Index", "Game");
+                return RedirectToAction("BattleBag", "Game");
+            }
+            else if (submit == "Item")
+            {
+                battle.BattleLog.Add("You used a item");
             }
             else
             {
@@ -107,8 +119,62 @@ namespace MVC_Test.Controllers
                     }
                 }
             }
-            TempData["Battle"] = battle;
+            Session["Battle"] = battle;
+            return View("Battle", battle);
+        }
+        [HttpGet]
+        public ActionResult BattleBag()
+        {
+            battle = (Battle)Session["Battle"];
             return View(battle);
+        }
+
+        [HttpPost]
+        public ActionResult BattleBag(string submit)
+        {
+            battle = (Battle)Session["Battle"];
+            if (submit != "Back to battle")
+            {
+                string itemName = submit.Substring(4);
+                foreach(Item item in battle.You.bag)
+                {
+                    if (item.Name == itemName)
+                    {
+                        string stat = item.Stat;
+                        int amount = item.Amount;
+
+                        switch (stat)
+                        {
+                            case "HP":
+                                battle.YourHP = battle.YourHP + amount;
+                                if (battle.YourHP > battle.You.HP)
+                                {
+                                    battle.YourHP = battle.You.HP;
+                                }
+                                break;
+                            case "Atk":
+                                battle.You.Atk = battle.You.Atk * amount;
+                                break;
+                            case "SpAtk":
+                                battle.You.SpAtk = battle.You.SpAtk * amount;
+                                break;
+                            case "SpDef":
+                                battle.You.SpDef = battle.You.SpDef * amount;
+                                break;
+                            case "Def":
+                                battle.You.Def = battle.You.Def * amount;
+                                break;
+                            case "Spe":
+                                battle.You.Spe = battle.You.Spe * amount;
+                                break;
+                        }
+                    }                  
+                }
+                battle.BattleLog.Add("You used a " + itemName);
+                battle.Move(battle.Enemy);
+            }
+            Session["Battle"] = battle;
+            return RedirectToAction("Battle", "Game");
         }
     }
 }

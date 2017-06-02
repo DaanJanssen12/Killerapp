@@ -279,6 +279,7 @@ namespace MVC_Test.Models
 
         public void LoadMoves(Character c)
         {
+            c.Moves.Clear();
             try
             {
                 string sql = @"SELECT Move, Power, Type FROM Moves m Join Moveset ms on m.Move = ms.Move1 or m.Move = ms.Move2 or m.Move = ms.Move3 or m.Move = ms.Move4 WHERE CharacterId = @id";
