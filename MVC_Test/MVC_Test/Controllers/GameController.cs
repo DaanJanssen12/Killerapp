@@ -64,13 +64,11 @@ namespace MVC_Test.Controllers
             battle = (Battle)Session["Battle"];
             if (submit == "Run")
             {
-                TempData["Character"] = battle.You;
                 battle.LoseDurability(sql);
                 return RedirectToAction("Index", "Game");
             }
             else if (submit == "Bag")
             {
-                TempData["Character"] = battle.You;
                 return RedirectToAction("BattleBag", "Game");
             }
             else
@@ -92,7 +90,6 @@ namespace MVC_Test.Controllers
                     if (battle.BattleLost == true)
                     {
                         battle.LoseDurability(sql);
-                        TempData["Character"] = battle.You;
                         TempData["BattleMessage"] = "You lost.";
                         return RedirectToAction("Index", "Game");
                     }
@@ -103,17 +100,16 @@ namespace MVC_Test.Controllers
                     if (battle.BattleLost == true)
                     {
                         battle.LoseDurability(sql);
-                        TempData["Character"] = battle.You;
                         TempData["BattleMessage"] = "You lost.";
                         return RedirectToAction("Index", "Game");
                     }
                     battle.Move(battle.You, submit);
                     if (battle.BattleWon == true)
                     {
+                        character = (Character)Session["Character"];
                         battle.LoseDurability(sql);
-                        battle.You.GainXP(battle.Enemy.XpGain, sql);
+                        character.GainXP(battle.Enemy.XpGain, sql);
                         battle.DropItem(sql);
-                        TempData["Character"] = battle.You;
                         TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the item your enemy dropped and put it in your bag.";
                         return RedirectToAction("Index", "Game");
                     }

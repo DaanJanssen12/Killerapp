@@ -46,21 +46,7 @@
                             </div>
                         </div>
                     </div>
-                    @switch (Model.You.Class)
-                    {
-                        case "Warior":
-                            <img src="~/Content/warrior.png" style="width:150px; height:150px;" />
-                            break;
-                        case "Mage":
-                            <img src="~/Content/wizard.png" style="width:150px; height:150px;" />
-                            break;
-                        case "Hunter":
-                            <img src="~/Content/hunter.jpg" style="width:150px; height:150px;" />
-                            break;
-                        case "Druid":
-                            <img src="~/Content/druid.png" style="width:150px; height:150px;" />
-                            break;
-                    }
+                    <img src=@Url.Content(Model.You.Image) style="width:150px; height:150px;" />
                 </div>
             </div>
         </div>

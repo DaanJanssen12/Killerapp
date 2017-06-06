@@ -4,67 +4,69 @@
     ViewBag.Title = "Game";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-<h2>Game</h2>
+<h2>@Model.Name - Lvl @Model.Lvl @Model.Class</h2>
 
 <div class="container">
-    <div class="col-md-6">
-        <div class="Stats">
-            <h3>Stats:</h3>
-            <table>
-                <tr>
-                    <td>Name</td>
-                    <td>@Model.Name</td>
-                </tr>
-                <tr>
-                    <td>Class</td>
-                    <td>@Model.Class</td>
-                </tr>
-                <tr>
-                    <td>LVL</td>
-                    <td>@Model.Lvl</td>
-                </tr>
-                <tr>
-                    <td>HP</td>
-                    <td>@Model.HP</td>
-                </tr>
-                <tr>
-                    <td>Atk</td>
-                    <td>@Model.Atk</td>
-                </tr>
-                <tr>
-                    <td>Def</td>
-                    <td>@Model.Def</td>
-                </tr>
-                <tr>
-                    <td>SpAtk</td>
-                    <td>@Model.SpAtk</td>
-                </tr>
-                <tr>
-                    <td>SpDef</td>
-                    <td>@Model.SpDef</td>
-                </tr>
-                <tr>
-                    <td>Spe</td>
-                    <td>@Model.Spe</td>
-                </tr>
-            </table>
-
+    <div class="row">
+        <div class="col-md-6">
+            <img src=@Url.Content(Model.Image) style="height:200px; width:200px;" />
+        </div>
+        <div class="col-md-6">
+            <h3>Moves:</h3>
+            @foreach(MVC_Test.Models.Move move in Model.Moves)
+            {
+                <p>@move.Name (type: @move.MoveType - power: @move.Power)</p>
+            }
         </div>
     </div>
-    <div class="col-md-6">
-        <h3>Bag:</h3>
-        @foreach (MVC_Test.Models.Item item in Model.bag)
-        {
-            if (item.Permanent == true)
-            {
-                <p>@item.Name - Durability: @item.Durability</p>
-            }
-            else if (item.Permanent == false)
-            {
-                <p>@item.Name - Amount: @item.Durability</p>
-            }
+    <div class="row">
+        <div class="col-md-6">
+            <div class="Stats">
+                <h3>Stats:</h3>
+                <table>
+                    <tr>
+                        <td>HP</td>
+                        <td>@Model.HP</td>
+                    </tr>
+                    <tr>
+                        <td>Atk</td>
+                        <td>@Model.Atk</td>
+                    </tr>
+                    <tr>
+                        <td>Def</td>
+                        <td>@Model.Def</td>
+                    </tr>
+                    <tr>
+                        <td>SpAtk</td>
+                        <td>@Model.SpAtk</td>
+                    </tr>
+                    <tr>
+                        <td>SpDef</td>
+                        <td>@Model.SpDef</td>
+                    </tr>
+                    <tr>
+                        <td>Spe</td>
+                        <td>@Model.Spe</td>
+                    </tr>
+                </table>
 
-        }
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>Bag:</h3>
+            @foreach (MVC_Test.Models.Item item in Model.bag)
+            {
+                if (item.Permanent == true)
+                {
+                    <p>@item.Name - Durability: @item.Durability</p>
+                }
+                else if (item.Permanent == false)
+                {
+                    <p>@item.Name - Amount: @item.Durability</p>
+                }
+
+            }
+        </div>
     </div>
 </div>
 

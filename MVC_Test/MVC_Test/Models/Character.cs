@@ -22,6 +22,7 @@ namespace MVC_Test.Models
         public string Class { get; set; }
         public string Gender { get; set; }
         public int XP { get; set; }
+        public string Image { get; set; }
 
         public List<Item> bag;
 
@@ -33,6 +34,21 @@ namespace MVC_Test.Models
             this.Class = Class;
             Gender = gender;
             bag = new List<Item>();
+            switch (this.Class)
+            {
+                case "Warior":
+                    Image = "~/Content/warrior.png";
+                    break;
+                case "Mage":
+                    Image = "~/Content/wizard.png";
+                    break;
+                case "Hunter":
+                    Image = "~/Content/hunter.jpg";
+                    break;
+                case "Druid":
+                    Image = "~/Content/druid.png";
+                    break;
+            }
         }
 
         public Character()
@@ -56,6 +72,7 @@ namespace MVC_Test.Models
                 Lvl = myLvl;
                 LvlUp(levels);
             }
+            sql.LoadStats(this);
             sql.UpdateStats(this);
         }
 
