@@ -43,6 +43,7 @@ namespace MVC_Test.Controllers
             else
             {
                 character = (Character)Session["Character"];
+                sql.LoadBag(character);
                 Random rng = new Random();
                 int minLvl = 1;
                 if (character.Lvl > 2)
