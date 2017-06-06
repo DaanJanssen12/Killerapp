@@ -161,5 +161,18 @@ namespace MVC_Test.Models
             Random rng = new Random();
             sql.DropBattleItem(You, rng.Next(1, 100));
         }
+
+        public void LoseDurability(ISql sql)
+        {
+            foreach (Item i in You.bag)
+            {
+                if (i.Permanent == true)
+                {
+                    int amount = (BattleLog.Count / 2) * 10;
+                    i.Durability = i.Durability - amount;
+                    sql.LoseDurability(i, You);
+                }
+            }
+        }
     }
 }

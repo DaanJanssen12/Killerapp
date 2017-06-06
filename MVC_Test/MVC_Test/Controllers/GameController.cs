@@ -65,6 +65,7 @@ namespace MVC_Test.Controllers
             if (submit == "Run")
             {
                 TempData["Character"] = battle.You;
+                battle.LoseDurability(sql);
                 return RedirectToAction("Index", "Game");
             }
             else if (submit == "Bag")
@@ -81,6 +82,7 @@ namespace MVC_Test.Controllers
                     {
                         character = (Character)Session["Character"];
                         character.GainXP(battle.Enemy.XpGain, sql);
+                        battle.LoseDurability(sql);
                         battle.DropItem(sql);
                         sql.LoadBag(character);
                         TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the " + character.bag.Last().Name + " your enemy dropped.";
@@ -89,6 +91,7 @@ namespace MVC_Test.Controllers
                     battle.Move(battle.Enemy);
                     if (battle.BattleLost == true)
                     {
+                        battle.LoseDurability(sql);
                         TempData["Character"] = battle.You;
                         TempData["BattleMessage"] = "You lost.";
                         return RedirectToAction("Index", "Game");
@@ -99,6 +102,7 @@ namespace MVC_Test.Controllers
                     battle.Move(battle.Enemy);
                     if (battle.BattleLost == true)
                     {
+                        battle.LoseDurability(sql);
                         TempData["Character"] = battle.You;
                         TempData["BattleMessage"] = "You lost.";
                         return RedirectToAction("Index", "Game");
@@ -106,6 +110,7 @@ namespace MVC_Test.Controllers
                     battle.Move(battle.You, submit);
                     if (battle.BattleWon == true)
                     {
+                        battle.LoseDurability(sql);
                         battle.You.GainXP(battle.Enemy.XpGain, sql);
                         battle.DropItem(sql);
                         TempData["Character"] = battle.You;

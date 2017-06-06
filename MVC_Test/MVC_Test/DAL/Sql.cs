@@ -270,6 +270,26 @@ namespace MVC_Test.Models
             
         }
 
+        public void LoseDurability(Item i, Character c)
+        {
+            string sql = "Update Bag " +
+                "Set Durability = @Durability" +
+                " Where CharacterId = @id AND ItemId = (SELECT ItemId FROM Item WHERE Name = @item)";
+            var cmd = new SqlCommand(sql, conn);
+            cmd.Parameters
+                .Add(new SqlParameter("@Durability", SqlDbType.Int))
+                .Value = i.Durability;
+            cmd.Parameters
+                .Add(new SqlParameter("@id", SqlDbType.Int))
+                .Value = c.CharacterId;
+            cmd.Parameters
+                .Add(new SqlParameter("@item", SqlDbType.VarChar))
+                .Value = i.Name;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
         public void DropBattleItem(Character c, int random)
         {
             try
