@@ -20,7 +20,18 @@
                             </div>
                         </div>
                     </div>
-                    <img src="~/Content/dragon.png" style="width:150px; height:150px;" />
+                    @switch (Model.Enemy.Type)
+                    {
+                        case "Dragon":
+                            <img src="~/Content/dragon.png" style="width:150px; height:150px;" />
+                            break;
+                        case "Orc":
+                            <img src="~/Content/Orc.png" style="width:150px; height:150px;" />
+                            break;
+                        case "Gollum":
+                            <img src="~/Content/gollum.png" style="width:150px; height:150px;" />
+                            break;
+                    }
                 </div>
             </div>
         </div>
@@ -35,7 +46,21 @@
                             </div>
                         </div>
                     </div>
-                    <img src="~/Content/warrior.png" style="width:150px; height:150px;" alt="You" />
+                    @switch (Model.You.Class)
+                    {
+                        case "Warior":
+                            <img src="~/Content/warrior.png" style="width:150px; height:150px;" />
+                            break;
+                        case "Mage":
+                            <img src="~/Content/wizard.png" style="width:150px; height:150px;" />
+                            break;
+                        case "Hunter":
+                            <img src="~/Content/hunter.jpg" style="width:150px; height:150px;" />
+                            break;
+                        case "Druid":
+                            <img src="~/Content/druid.png" style="width:150px; height:150px;" />
+                            break;
+                    }
                 </div>
             </div>
         </div>

@@ -43,8 +43,8 @@ namespace MVC_Test.Controllers
             {
                 character = (Character)Session["Character"];
                 Random rng = new Random();
-                int minLvl = 1;
-                if (character.Lvl > 2)
+                int minLvl = 2;
+                if (character.Lvl > 4)
                 {
                     minLvl = character.Lvl - 2;
                 }

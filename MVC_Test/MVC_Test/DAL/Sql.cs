@@ -107,7 +107,7 @@ namespace MVC_Test.Models
                     .Add(new SqlParameter("@username", SqlDbType.VarChar))
                     .Value = user.UserName;
                 cmd.Parameters
-                    .Add(new SqlParameter("@username", SqlDbType.VarChar))
+                    .Add(new SqlParameter("@password", SqlDbType.VarChar))
                     .Value = user.Password;
                 conn.Open();
                 cmd.ExecuteNonQuery();
