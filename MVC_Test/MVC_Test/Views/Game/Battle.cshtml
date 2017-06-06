@@ -8,7 +8,7 @@
 @using (Html.BeginForm())
 {
     <div class="container">
-        <h2>Battle - You vs a lvl @Model.Enemy.Lvl @Model.Enemy.Type </h2>
+        <h2 style="text-align:center;">Battle - You vs a lvl @Model.Enemy.Lvl @Model.Enemy.Type </h2>
         <div class="row">
             <div class="Enemy">
                 <div class="Character">
@@ -23,13 +23,13 @@
                     @switch (Model.Enemy.Type)
                     {
                         case "Dragon":
-                            <img src="~/Content/dragon.png" style="width:150px; height:150px;" />
+                            <img src="~/Content/dragon.png" style="width:130px; height:130px;" />
                             break;
                         case "Orc":
-                            <img src="~/Content/Orc.png" style="width:150px; height:150px;" />
+                            <img src="~/Content/Orc.png" style="width:130px; height:130px;" />
                             break;
                         case "Gollum":
-                            <img src="~/Content/gollum.png" style="width:150px; height:150px;" />
+                            <img src="~/Content/gollum.png" style="width:130px; height:130px;" />
                             break;
                     }
                 </div>
@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                    <img src=@Url.Content(Model.You.Image) style="width:150px; height:150px;" />
+                    <img src=@Url.Content(Model.You.Image) style="width:130px; height:130px;" />
                 </div>
             </div>
         </div>
