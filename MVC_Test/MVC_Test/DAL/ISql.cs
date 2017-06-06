@@ -26,6 +26,7 @@ namespace MVC_Test.Models
         void DropBattleItem(Character c, int random);
         void UseBattleItem(string item, Character c);
         void LoseDurability(Item i, Character c);
+        void DeleteItem(Item i, Character c);
 
         //Bag
         void LoadBag(Character c);

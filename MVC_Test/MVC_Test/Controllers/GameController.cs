@@ -85,7 +85,7 @@ namespace MVC_Test.Controllers
                         battle.LoseDurability(sql);
                         battle.DropItem(sql);
                         sql.LoadBag(character);
-                        TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the " + character.bag.Last().Name + " your enemy dropped.";
+                        TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the item your enemy dropped and put it in your bag.";
                         return RedirectToAction("Index", "Game");
                     }
                     battle.Move(battle.Enemy);
@@ -114,7 +114,7 @@ namespace MVC_Test.Controllers
                         battle.You.GainXP(battle.Enemy.XpGain, sql);
                         battle.DropItem(sql);
                         TempData["Character"] = battle.You;
-                        TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the " + battle.You.bag.Last().Name + " your enemy dropped.";
+                        TempData["BattleMessage"] = "GG, You won the battle. You gained " + battle.Enemy.XpGain + "XP. You also picked up the item your enemy dropped and put it in your bag.";
                         return RedirectToAction("Index", "Game");
                     }
                 }

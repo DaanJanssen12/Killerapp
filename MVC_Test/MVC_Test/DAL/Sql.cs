@@ -290,6 +290,22 @@ namespace MVC_Test.Models
             conn.Close();
         }
 
+        public void DeleteItem(Item i, Character c)
+        {
+            string sql = "DELETE FROM Bag " +
+                " Where CharacterId = @id AND ItemId = (SELECT ItemId FROM Item WHERE Name = @item)";
+            var cmd = new SqlCommand(sql, conn);
+            cmd.Parameters
+                .Add(new SqlParameter("@id", SqlDbType.Int))
+                .Value = c.CharacterId;
+            cmd.Parameters
+                .Add(new SqlParameter("@item", SqlDbType.VarChar))
+                .Value = i.Name;
+            conn.Open();
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
         public void DropBattleItem(Character c, int random)
         {
             try

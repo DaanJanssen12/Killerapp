@@ -26,7 +26,7 @@ namespace MVC_Test.Models
 
         public void GetStats()
         {
-            int totalStats = 50 + (Lvl * 5);
+            int totalStats = 50 + ((Lvl-1) * 14);
             Random rng = new Random();
             HP = rng.Next(Convert.ToInt32(totalStats / 4), Convert.ToInt32(totalStats / 2));
             totalStats = totalStats - HP;

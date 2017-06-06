@@ -170,7 +170,14 @@ namespace MVC_Test.Models
                 {
                     int amount = (BattleLog.Count / 2) * 10;
                     i.Durability = i.Durability - amount;
-                    sql.LoseDurability(i, You);
+                    if (i.Durability <= 0)
+                    {
+                        sql.DeleteItem(i, You);
+                    }
+                    else
+                    {
+                        sql.LoseDurability(i, You);
+                    }
                 }
             }
         }
