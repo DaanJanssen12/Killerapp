@@ -277,6 +277,26 @@ namespace MVC_Test.Models
             { }
         }
 
+        public void UseBattleItem(string item, Character c)
+        {
+            try
+            {
+                string sql = @"UseItem @item, @id";
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@item", SqlDbType.VarChar))
+                    .Value = item;
+                cmd.Parameters
+                    .Add(new SqlParameter("@id", SqlDbType.Int))
+                    .Value = c.CharacterId;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch
+            { }
+        }
+
         public void LoadMoves(Character c)
         {
             c.Moves.Clear();

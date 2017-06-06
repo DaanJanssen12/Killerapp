@@ -11,7 +11,7 @@ namespace MVC_Test.Models
         public string Stat { get; private set; }
         public int Amount { get; private set; }
         public bool Permanent { get; private set; }
-        public int Durability { get; private set; }
+        public int Durability { get; set; }
 
         public Item(string name, string stat, int amount, bool permanent, int durability)
         {

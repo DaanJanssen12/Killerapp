@@ -23,6 +23,7 @@ namespace MVC_Test.Models
 
         //Item
         void DropBattleItem(Character c, int random);
+        void UseBattleItem(string item, Character c);
 
         //Bag
         void LoadBag(Character c);

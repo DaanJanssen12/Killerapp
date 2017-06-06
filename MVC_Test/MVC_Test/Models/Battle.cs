@@ -80,6 +80,47 @@ namespace MVC_Test.Models
             return damage;
         }
 
+        public void UseItem(string itemName, ISql sql)
+        {
+            foreach (Item item in You.bag)
+            {
+                if (item.Name == itemName)
+                {
+                    string stat = item.Stat;
+                    int amount = item.Amount;
+
+                    switch (stat)
+                    {
+                        case "HP":
+                            YourHP = YourHP + amount;
+                            if (YourHP > You.HP)
+                            {
+                                YourHP = You.HP;
+                            }
+                            break;
+                        case "Atk":
+                            You.Atk = You.Atk * amount;
+                            break;
+                        case "SpAtk":
+                            You.SpAtk = You.SpAtk * amount;
+                            break;
+                        case "SpDef":
+                            You.SpDef = You.SpDef * amount;
+                            break;
+                        case "Def":
+                            You.Def = You.Def * amount;
+                            break;
+                        case "Spe":
+                            You.Spe = You.Spe * amount;
+                            break;
+                    }
+                    sql.UseBattleItem(itemName, You);
+                    item.Durability = item.Durability - 1;
+                    BattleLog.Add("You used a " + itemName);
+                }
+            }            
+        }
+
         public void DropItem(ISql sql)
         {
             Random rng = new Random();

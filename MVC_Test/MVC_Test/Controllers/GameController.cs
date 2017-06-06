@@ -73,10 +73,6 @@ namespace MVC_Test.Controllers
                 TempData["Character"] = battle.You;
                 return RedirectToAction("BattleBag", "Game");
             }
-            else if (submit == "Item")
-            {
-                battle.BattleLog.Add("You used a item");
-            }
             else
             {
                 if (battle.You.Spe > battle.Enemy.Spe)
@@ -136,41 +132,7 @@ namespace MVC_Test.Controllers
             if (submit != "Back to battle")
             {
                 string itemName = submit.Substring(4);
-                foreach(Item item in battle.You.bag)
-                {
-                    if (item.Name == itemName)
-                    {
-                        string stat = item.Stat;
-                        int amount = item.Amount;
-
-                        switch (stat)
-                        {
-                            case "HP":
-                                battle.YourHP = battle.YourHP + amount;
-                                if (battle.YourHP > battle.You.HP)
-                                {
-                                    battle.YourHP = battle.You.HP;
-                                }
-                                break;
-                            case "Atk":
-                                battle.You.Atk = battle.You.Atk * amount;
-                                break;
-                            case "SpAtk":
-                                battle.You.SpAtk = battle.You.SpAtk * amount;
-                                break;
-                            case "SpDef":
-                                battle.You.SpDef = battle.You.SpDef * amount;
-                                break;
-                            case "Def":
-                                battle.You.Def = battle.You.Def * amount;
-                                break;
-                            case "Spe":
-                                battle.You.Spe = battle.You.Spe * amount;
-                                break;
-                        }
-                    }                  
-                }
-                battle.BattleLog.Add("You used a " + itemName);
+                battle.UseItem(itemName, sql);
                 battle.Move(battle.Enemy);
             }
             Session["Battle"] = battle;
