@@ -20,14 +20,49 @@ namespace MVC_Test.Models
         {
             You = c;
             Enemy = e;
-            YourHP = c.HP;
-            EnemyHP = e.HP;
+            StatsAfterItems();
+            YourHP = You.HP;
+            EnemyHP = Enemy.HP;
             BattleLog = new List<string>();
         }
 
         public Battle()
         {
 
+        }
+
+        public void StatsAfterItems()
+        {
+            foreach (Item item in You.bag)
+            {
+                if (item.Permanent == true)
+                {
+                    string stat = item.Stat;
+                    int amount = item.Amount;
+
+                    switch (stat)
+                    {
+                        case "HP":
+                            You.HP = You.HP + amount;
+                            break;
+                        case "Atk":
+                            You.Atk = You.Atk + amount;
+                            break;
+                        case "SpAtk":
+                            You.SpAtk = You.SpAtk + amount;
+                            break;
+                        case "SpDef":
+                            You.SpDef = You.SpDef + amount;
+                            break;
+                        case "Def":
+                            You.Def = You.Def + amount;
+                            break;
+                        case "Spe":
+                            You.Spe = You.Spe + amount;
+                            break;
+                    }
+                }
+            }
         }
 
         public void Move(Character You, string submit)

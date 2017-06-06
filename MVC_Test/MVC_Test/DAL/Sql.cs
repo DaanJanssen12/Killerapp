@@ -96,6 +96,25 @@ namespace MVC_Test.Models
                 }
         }
 
+        public void CreateUser(User user)
+        {
+            try
+            {
+                string sql = "INSERT INTO [User](Username, Password)" +
+                             "VALUES(@username, @password)";
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@username", SqlDbType.VarChar))
+                    .Value = user.UserName;
+                cmd.Parameters
+                    .Add(new SqlParameter("@username", SqlDbType.VarChar))
+                    .Value = user.Password;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch { }
+
+        }
 
         public void LoadCharacters(User user)
         {

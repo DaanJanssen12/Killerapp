@@ -123,10 +123,10 @@
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\Creature.cs" />
     <Compile Include="Models\EvilCreature.cs" />
-    <Compile Include="Models\ISql.cs" />
+    <Compile Include="DAL\ISql.cs" />
     <Compile Include="Models\Item.cs" />
     <Compile Include="Models\Move.cs" />
-    <Compile Include="Models\Sql.cs" />
+    <Compile Include="DAL\Sql.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -146,8 +146,8 @@
     <Content Include="Views\Shared\_Layout2.cshtml" />
     <Content Include="Views\Menu\NewCharacter.cshtml" />
     <Content Include="Views\Game\Index.cshtml" />
-    <Content Include="Views\Game\Battle.cshtml" />
     <Content Include="Views\Game\BattleBag.cshtml" />
+    <Content Include="Views\Game\Battle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

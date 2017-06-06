@@ -12,6 +12,7 @@ namespace MVC_Test.Models
         bool Login(string username, string password);
         bool UserExists(string username);
         int GetUserId(string username);
+        void CreateUser(User user);
 
         //Character
         void LoadCharacters(User user);

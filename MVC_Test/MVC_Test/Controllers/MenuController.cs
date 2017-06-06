@@ -13,13 +13,13 @@ namespace MVC_Test.Controllers
         // GET: Menu
         public ActionResult Index()
         {
-            if(TempData["User"] == null)
+            if(Session["User"] == null)
             {
                 return RedirectToAction("Login", "User");
             }
-            User user = (User)TempData["User"];
+            User user = (User)Session["User"];
             user.loadCharacters(sql);
-            TempData["User"] = user;
+            Session["User"] = user;
             if (user.characters.Count > 0)
             {
                 ViewBag.C1 = user.characters[0].ToString();
@@ -53,11 +53,11 @@ namespace MVC_Test.Controllers
         [HttpPost]
         public ActionResult Index(string submit)
         {
-            if (TempData["User"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "User");
             }
-            User user = (User)TempData["User"];
+            User user = (User)Session["User"];
 
             if (submit == "New character")
             {
@@ -80,7 +80,7 @@ namespace MVC_Test.Controllers
         [HttpGet]
         public ActionResult NewCharacter()
         {
-            if (TempData["User"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "User");
             }
@@ -99,13 +99,13 @@ namespace MVC_Test.Controllers
         [HttpPost]
         public ActionResult NewCharacter(Models.Character character)
         {
-            if (TempData["User"] == null)
+            if (Session["User"] == null)
             {
                 return RedirectToAction("Login", "User");
             }
-            User user = (User)TempData["User"];
+            User user = (User)Session["User"];
             sql.CreateCharacter(user, character);
-            TempData["User"] = user;
+            Session["User"] = user;
             return RedirectToAction("Index", "Menu");
         }
     }

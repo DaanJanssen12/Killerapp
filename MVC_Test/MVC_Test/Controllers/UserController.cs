@@ -30,7 +30,7 @@ namespace MVC_Test.Controllers
              {
                  FormsAuthentication.SetAuthCookie(user.UserName, user.RememberMe);
                  user.Id = sql.GetUserId(user.UserName);
-                 TempData["User"] = user;
+                 Session["User"] = user;
                  return RedirectToAction("Index", "Menu");
              }
              else
@@ -57,6 +57,7 @@ namespace MVC_Test.Controllers
                 }
                 else
                 {
+                    sql.CreateUser(user);
                     ViewBag.Message = "Account succesvol aangemaakt.";
                 }
             }

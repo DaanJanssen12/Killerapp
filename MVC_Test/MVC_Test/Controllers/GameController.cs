@@ -23,7 +23,6 @@ namespace MVC_Test.Controllers
             character = (Character)Session["Character"];
             sql.LoadStats(character);
             sql.LoadBag(character);
-            int count = character.bag.Count;
             sql.LoadMoves(character);
             Session["Character"] = character;
             return View(character);
@@ -43,7 +42,6 @@ namespace MVC_Test.Controllers
             else
             {
                 character = (Character)Session["Character"];
-                sql.LoadBag(character);
                 Random rng = new Random();
                 int minLvl = 1;
                 if (character.Lvl > 2)
