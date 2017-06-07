@@ -354,7 +354,7 @@ namespace MVC_Test.Models
             c.Moves.Clear();
             try
             {
-                string sql = @"SELECT Move, Power, Type FROM Moves m Join Moveset ms on m.Move = ms.Move1 or m.Move = ms.Move2 or m.Move = ms.Move3 or m.Move = ms.Move4 WHERE CharacterId = @id";
+                string sql = @"SELECT Move, Power, Type, Effect FROM Moves m Join Moveset ms on m.Move = ms.Move1 or m.Move = ms.Move2 or m.Move = ms.Move3 or m.Move = ms.Move4 WHERE CharacterId = @id";
                 var cmd = new SqlCommand(sql, conn);
                 cmd.Parameters
                     .Add(new SqlParameter("@id", SqlDbType.Int))
@@ -366,7 +366,7 @@ namespace MVC_Test.Models
                     {
                         while (reader.Read())
                         {
-                            c.Moves.Add(new Move(reader[0].ToString(), (Int32)reader[1], reader[2].ToString()));
+                            c.Moves.Add(new Move(reader[0].ToString(), (Int32)reader[1], reader[2].ToString(), reader[3].ToString()));
                         }
                     }
                 }
@@ -378,7 +378,7 @@ namespace MVC_Test.Models
         {
             try
             {
-                string sql = @"SELECT TOP 4 Move, Power, Type FROM Moves WHERE Class is null and lvl < @lvl";
+                string sql = @"SELECT TOP 4 Move, Power, Type, Effect FROM Moves WHERE Class is null and lvl < @lvl";
                 var cmd = new SqlCommand(sql, conn);
                 cmd.Parameters
                     .Add(new SqlParameter("@lvl", SqlDbType.Int))
@@ -390,7 +390,7 @@ namespace MVC_Test.Models
                     {
                         while (reader.Read())
                         {
-                            e.Moves.Add(new Move(reader[0].ToString(), (Int32)reader[1], reader[2].ToString()));
+                            e.Moves.Add(new Move(reader[0].ToString(), (Int32)reader[1], reader[2].ToString(), reader[3].ToString()));
                         }
                     }
                 }

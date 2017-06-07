@@ -71,7 +71,24 @@ namespace MVC_Test.Models
             {
                 if (submit == move.Name)
                 {
-                    EnemyHP = EnemyHP - DamageCalc(You, Enemy, move);
+                    if (move.MoveType == "Status")
+                    {
+                        switch (move.Effect)
+                        {
+                            case "Heal":
+                                int heal = You.HP / (100 / move.Power);
+                                YourHP = YourHP + heal;
+                                if (YourHP > You.HP)
+                                {
+                                    YourHP = You.HP;
+                                }
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        EnemyHP = EnemyHP - DamageCalc(You, Enemy, move);
+                    }
                     if (EnemyHP <= 0)
                     {
                         BattleWon = true;

@@ -10,12 +10,14 @@ namespace MVC_Test.Models
         public string Name { get; private set; }
         public int Power { get; private set; }
         public string MoveType { get; private set; }
+        public string Effect { get; private set; }
 
-        public Move(string name, int power, string moveType)
+        public Move(string name, int power, string moveType, string effect)
         {
             Name = name;
             Power = power;
             MoveType = moveType;
+            Effect = effect;
         }
     }
 }
