@@ -7,11 +7,12 @@ namespace MVC_Test.Models
 {
     public class Item
     {
-        public string Name { get; private set; }
-        public string Stat { get; private set; }
-        public int Amount { get; private set; }
-        public bool Permanent { get; private set; }
+        public string Name { get; set; }
+        public string Stat { get; set; }
+        public int Amount { get; set; }
+        public bool Permanent { get; set; }
         public int Durability { get; set; }
+        public List<Item> MadeOf;
 
         public Item(string name, string stat, int amount, bool permanent, int durability)
         {
@@ -20,6 +21,15 @@ namespace MVC_Test.Models
             Amount = amount;
             Permanent = permanent;
             Durability = durability;
+        }
+
+        public Item(string madeOf, Sql sql)
+        {
+            MadeOf = new List<Item>();
+            int itemId = Convert.ToInt32(madeOf.Substring(0, 1));
+            int amount = Convert.ToInt32(madeOf.Substring(2, 1));
+            Item item = sql.LoadItem(itemId, amount);
+            MadeOf.Add(item);
         }
     }
 }

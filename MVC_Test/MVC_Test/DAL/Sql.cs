@@ -270,6 +270,58 @@ namespace MVC_Test.Models
             
         }
 
+        public List<Item> LoadCraftableItems()
+        {
+            try
+            {
+                string sql = "SELECT MadeOf, Name FROM Item WHERE MadeOf is not null";
+                var cmd = new SqlCommand(sql, conn);
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    List<Item> craftableItems = new List<Item>();
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            craftableItems.Add(new Item(reader[0].ToString(), this)
+                            {
+                                Name = reader[1].ToString()
+                            });
+                        }
+                    }
+                    return craftableItems;
+                }
+            }
+            catch { return null; }
+        }
+
+        public Item LoadItem(int id, int amount)
+        {
+            try
+            {
+                string sql = @"Select Name, Stat, Amount, Permanent" +
+                           " From Item" +
+                           " Where ItemId = @id";
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@id", SqlDbType.Int))
+                    .Value = id;
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    Item item = null;
+                    if (reader.Read())
+                    {
+                        item = (new Item(reader[0].ToString(), reader[1].ToString(), Convert.ToInt32(reader[2]), Convert.ToBoolean(reader[3]), amount));
+                    }
+                    conn.Close();
+                    return item;
+                }
+            }
+            catch { return null; }
+        }
+
         public void LoseDurability(Item i, Character c)
         {
             string sql = "Update Bag " +
@@ -354,7 +406,7 @@ namespace MVC_Test.Models
             c.Moves.Clear();
             try
             {
-                string sql = @"SELECT Move, Power, Type, Effect FROM Moves m Join Moveset ms on m.Move = ms.Move1 or m.Move = ms.Move2 or m.Move = ms.Move3 or m.Move = ms.Move4 WHERE CharacterId = @id";
+                string sql = @"SELECT Move, Power, Type, Effect FROM Moves m Join Moveset ms on m.Move = ms.Move1 or m.Move = ms.Move2 or m.Move = ms.Move3 or m.Move = ms.Move4 WHERE CharacterId = @id Order by m.Class desc";
                 var cmd = new SqlCommand(sql, conn);
                 cmd.Parameters
                     .Add(new SqlParameter("@id", SqlDbType.Int))

@@ -138,5 +138,10 @@ namespace MVC_Test.Controllers
             Session["Battle"] = battle;
             return RedirectToAction("Battle", "Game");
         }
+
+        public ActionResult Craft()
+        {
+            return View(sql.LoadCraftableItems());
+        }
     }
 }

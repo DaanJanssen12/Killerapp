@@ -153,6 +153,7 @@
     <Content Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Game\BattleBag.cshtml" />
     <Content Include="Views\Game\Battle.cshtml" />
+    <Content Include="Views\Game\Craft.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

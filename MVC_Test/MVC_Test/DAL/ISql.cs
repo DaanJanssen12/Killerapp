@@ -23,6 +23,8 @@ namespace MVC_Test.Models
         void UpdateStats(Character c);
 
         //Item
+        List<Item> LoadCraftableItems();
+        Item LoadItem(int id, int amount);
         void DropBattleItem(Character c);
         void UseBattleItem(string item, Character c);
         void LoseDurability(Item i, Character c);
