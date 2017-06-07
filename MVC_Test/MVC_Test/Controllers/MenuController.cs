@@ -104,7 +104,14 @@ namespace MVC_Test.Controllers
                 return RedirectToAction("Login", "User");
             }
             User user = (User)Session["User"];
-            sql.CreateCharacter(user, character);
+            if (sql.CreateCharacter(user, character) == true)
+            {
+                TempData["CharacterMessage"] = character.Name + " is created succesfully!";
+            }
+            else
+            {
+                TempData["CharacterMessage"] = "This name already exists, character was not created.";
+            }
             Session["User"] = user;
             return RedirectToAction("Index", "Menu");
         }

@@ -31,7 +31,7 @@ namespace MVC_Test.Models
                     Image = "~/Content/Orc.png";
                     break;
                 case "Gollum":
-                    Image = "~/Content/gollum.jpg";
+                    Image = "~/Content/gollum.png";
                     break;
             }
         }

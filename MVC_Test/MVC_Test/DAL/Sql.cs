@@ -150,16 +150,16 @@ namespace MVC_Test.Models
                 string sql = @"CreateCharacter @Name, @UserId, @Class, @Gender";
                 var cmd = new SqlCommand(sql, conn);
                 cmd.Parameters
-                    .Add(new SqlParameter("@Name", SqlDbType.NVarChar))
+                    .Add(new SqlParameter("@Name", SqlDbType.VarChar))
                     .Value = character.Name;
                 cmd.Parameters
                     .Add(new SqlParameter("@UserId", SqlDbType.Int))
                     .Value = user.Id;
                 cmd.Parameters
-                    .Add(new SqlParameter("@Class", SqlDbType.NVarChar))
+                    .Add(new SqlParameter("@Class", SqlDbType.VarChar))
                     .Value = character.Class;
                 cmd.Parameters
-                    .Add(new SqlParameter("@Gender", SqlDbType.NVarChar))
+                    .Add(new SqlParameter("@Gender", SqlDbType.VarChar))
                     .Value = character.Gender;
                 conn.Open();
                 cmd.ExecuteNonQuery();
@@ -306,15 +306,12 @@ namespace MVC_Test.Models
             conn.Close();
         }
 
-        public void DropBattleItem(Character c, int random)
+        public void DropBattleItem(Character c)
         {
             try
             {
-                string sql = @"BattleItemDrop @random, @Class, @Lvl, @CharacterId";
+                string sql = @"BattleItemDrop @Class, @Lvl, @CharacterId";
                 var cmd = new SqlCommand(sql, conn);
-                cmd.Parameters
-                    .Add(new SqlParameter("@random", SqlDbType.Int))
-                    .Value = random;
                 cmd.Parameters
                     .Add(new SqlParameter("@Class", SqlDbType.VarChar))
                     .Value = c.Class;

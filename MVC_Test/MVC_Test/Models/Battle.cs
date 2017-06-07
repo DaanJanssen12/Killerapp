@@ -158,8 +158,7 @@ namespace MVC_Test.Models
 
         public void DropItem(ISql sql)
         {
-            Random rng = new Random();
-            sql.DropBattleItem(You, rng.Next(1, 100));
+            sql.DropBattleItem(You);
         }
 
         public void LoseDurability(ISql sql)

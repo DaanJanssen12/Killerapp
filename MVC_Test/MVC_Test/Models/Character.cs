@@ -16,11 +16,11 @@ namespace MVC_Test.Models
 
     public class Character : Creature
     {
-        public int CharacterId { get; private set; }
-        public int UserId { get; private set; }
-        public string Name { get; private set; }
-        public string Class { get; private set; }
-        public string Gender { get; private set; }
+        public int CharacterId { get; set; }
+        public int UserId { get; set; }
+        public string Name { get; set; }
+        public string Class { get; set; }
+        public string Gender { get; set; }
         public int XP { get; set; }
 
         public List<Item> bag;

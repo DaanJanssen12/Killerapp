@@ -14,6 +14,12 @@
     </ul>
 }
 
+@if (null != TempData["CharacterMessage"])
+{
+    <script type="text/javascript">
+       alert("@TempData["CharacterMessage"]");
+    </script>
+}
 
 
 

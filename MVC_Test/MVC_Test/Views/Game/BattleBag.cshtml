@@ -7,23 +7,24 @@
 @using (Html.BeginForm())
 {
     <div class="container">
-        <h2>Bag</h2>
-        <div class="row" style="height:auto">
-            <div class="col-md-12">
-                <input name="submit" type="submit" value="Back to battle"/>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Bag:</h3>
+                @foreach (MVC_Test.Models.Item item in Model.You.bag)
+                {
+                    if (item.Permanent == false)
+                    {
+                        <p>@item.Name - Amount: @item.Durability <input name="submit" type="submit" value="Use @item.Name" /></p>
+                    }
+                }
             </div>
         </div>
-        <div class="col-md-6">
-            <h3>Bag:</h3>
-            @foreach (MVC_Test.Models.Item item in Model.You.bag)
-            {
-                if (item.Permanent == false)
-                {
-                    <p>@item.Name - Amount: @item.Durability <input name="submit" type="submit" value="Use @item.Name" /></p>
-                }
-            }
+        <div class="row">
+            <div class="col-md-12">
+                <input name="submit" type="submit" value="Back to battle" />
+            </div>
         </div>
-    </div>
 }
 
 
