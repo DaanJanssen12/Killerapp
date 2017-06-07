@@ -22,6 +22,18 @@ namespace MVC_Test.Models
             Type = type;
             XpGain = (lvl * lvl) / 4;
             this.GetStats();
+            switch (Type)
+            {
+                case "Dragon":
+                    Image = "~/Content/dragon.png";
+                    break;
+                case "Orc":
+                    Image = "~/Content/Orc.png";
+                    break;
+                case "Gollum":
+                    Image = "~/Content/gollum.jpg";
+                    break;
+            }
         }
 
         public void GetStats()

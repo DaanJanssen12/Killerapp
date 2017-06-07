@@ -20,18 +20,7 @@
                             </div>
                         </div>
                     </div>
-                    @switch (Model.Enemy.Type)
-                    {
-                        case "Dragon":
-                            <img src="~/Content/dragon.png" style="width:130px; height:130px;" />
-                            break;
-                        case "Orc":
-                            <img src="~/Content/Orc.png" style="width:130px; height:130px;" />
-                            break;
-                        case "Gollum":
-                            <img src="~/Content/gollum.png" style="width:130px; height:130px;" />
-                            break;
-                    }
+                    <img src=@Url.Content(Model.Enemy.Image) style="width:130px; height:130px;" />
                 </div>
             </div>
         </div>

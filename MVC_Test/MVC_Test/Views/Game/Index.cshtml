@@ -4,11 +4,12 @@
     ViewBag.Title = "Game";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
-<h2>@Model.Name - Lvl @Model.Lvl @Model.Class</h2>
 
 <div class="container">
+    <h2 style="text-align:center">@Model.Name - Lvl @Model.Lvl @Model.Class</h2>
     <div class="row">
         <div class="col-md-6">
+            <h3>You:</h3>
             <img src=@Url.Content(Model.Image) style="height:200px; width:200px;" />
         </div>
         <div class="col-md-6">

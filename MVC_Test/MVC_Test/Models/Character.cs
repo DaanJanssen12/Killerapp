@@ -16,13 +16,12 @@ namespace MVC_Test.Models
 
     public class Character : Creature
     {
-        public int CharacterId { get; set; }
-        public int UserId { get; set; }
-        public string Name { get; set; }
-        public string Class { get; set; }
-        public string Gender { get; set; }
+        public int CharacterId { get; private set; }
+        public int UserId { get; private set; }
+        public string Name { get; private set; }
+        public string Class { get; private set; }
+        public string Gender { get; private set; }
         public int XP { get; set; }
-        public string Image { get; set; }
 
         public List<Item> bag;
 
@@ -63,6 +62,7 @@ namespace MVC_Test.Models
 
         public void GainXP(int xp, ISql sql)
         {
+            sql.LoadStats(this);
             XP = XP + xp;
             double lvl = Math.Sqrt(XP);
             int myLvl = Convert.ToInt32(Math.Floor(lvl));
@@ -72,7 +72,6 @@ namespace MVC_Test.Models
                 Lvl = myLvl;
                 LvlUp(levels);
             }
-            sql.LoadStats(this);
             sql.UpdateStats(this);
         }
 
