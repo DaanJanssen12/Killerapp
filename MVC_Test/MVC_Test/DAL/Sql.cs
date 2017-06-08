@@ -275,23 +275,29 @@ namespace MVC_Test.Models
             try
             {
                 string sql = "SELECT MadeOf, Name FROM Item WHERE MadeOf is not null";
+                string madeOf = "";
                 var cmd = new SqlCommand(sql, conn);
                 conn.Open();
+                List<Item> craftableItems = new List<Item>();
                 using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    List<Item> craftableItems = new List<Item>();
+                {                  
                     if (reader.HasRows)
                     {
                         while (reader.Read())
                         {
-                            craftableItems.Add(new Item(reader[0].ToString(), this)
-                            {
-                                Name = reader[1].ToString()
-                            });
+                            madeOf = reader[0].ToString();
+                            Item item = new Item();
+                            item.Name = reader[1].ToString();
+                            craftableItems.Add(item);
                         }
                     }
-                    return craftableItems;
+                    conn.Close();
                 }
+                foreach (Item item in craftableItems)
+                {
+                    item.LoadItems(madeOf, this);
+                }
+                return craftableItems;
             }
             catch { return null; }
         }
@@ -308,15 +314,24 @@ namespace MVC_Test.Models
                     .Add(new SqlParameter("@id", SqlDbType.Int))
                     .Value = id;
                 conn.Open();
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using(SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    Item item = null;
-                    if (reader.Read())
+                    if (reader.HasRows)
                     {
-                        item = (new Item(reader[0].ToString(), reader[1].ToString(), Convert.ToInt32(reader[2]), Convert.ToBoolean(reader[3]), amount));
+                        if (reader.Read())
+                        {
+                            return new Item(reader[0].ToString(), reader[1].ToString(), Convert.ToInt32(reader[2]), Convert.ToBoolean(reader[3]), amount);
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
-                    conn.Close();
-                    return item;
+                    else
+                    {
+                        return null;
+                    }
+
                 }
             }
             catch { return null; }
@@ -340,6 +355,26 @@ namespace MVC_Test.Models
             conn.Open();
             cmd.ExecuteNonQuery();
             conn.Close();
+        }
+
+        public void CraftItem(string item, Character c)
+        {
+            try
+            {
+                string sql = @"CraftItem @item, @id";
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@item", SqlDbType.VarChar))
+                    .Value = item;
+                cmd.Parameters
+                    .Add(new SqlParameter("@id", SqlDbType.Int))
+                    .Value = c.CharacterId;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch
+            { }
         }
 
         public void DeleteItem(Item i, Character c)

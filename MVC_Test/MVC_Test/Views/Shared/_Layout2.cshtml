@@ -19,16 +19,17 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+                @Html.ActionLink("Home", "Index", "Game", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Sign Out", "Logout", "User")</li>
                     <li>@Html.ActionLink("Choose Your Character", "Index", "Menu")</li>
                     @if (Session["Character"] != null)
                     {
                         <li>@Html.ActionLink("Battle", "Battle", "Game")</li>
                         <li>@Html.ActionLink("Crafting", "Craft", "Game")</li>
                     }
+                    <li>@Html.ActionLink("Sign Out", "Logout", "User")</li>
 
                 </ul>
             </div>

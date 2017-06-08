@@ -141,7 +141,56 @@ namespace MVC_Test.Controllers
 
         public ActionResult Craft()
         {
-            return View(sql.LoadCraftableItems());
+            List<Item> craftableItems = sql.LoadCraftableItems();
+            TempData["Craftables"] = craftableItems;
+            return View(craftableItems);
+        }
+
+        [HttpPost]
+        public ActionResult Craft(string craft)
+        {
+            character = (Character)Session["Character"];
+            List<Item> craftables = (List<Item>)TempData["Craftables"];
+            bool craftable = false;
+            Item craftItem = null;
+            string itemName = craft.Substring(8);
+            foreach (Item item in craftables)
+            {
+                if (item.Name == itemName)
+                {
+                    foreach (Item i in item.MadeOf)
+                    {
+                        foreach (Item x in character.bag)
+                        {
+                            if (i.Name == x.Name && x.Durability >= i.Durability)
+                            {
+                                craftable = true;
+                                x.Durability = x.Durability - i.Durability;
+                                craftItem = x;
+                            }
+                        }
+                    }
+                }
+            }
+            if(craftable == true)
+            {
+                if (craftItem.Durability != 0)
+                {
+                    sql.LoseDurability(craftItem, character);
+                }
+                else
+                {
+                    sql.DeleteItem(craftItem, character);
+                }
+                TempData["CraftMessage"] = "You succesfully crafted a " + itemName;
+                sql.CraftItem(itemName, character);
+            }
+            else
+            {
+                TempData["CraftMessage"] = "You can only craft items if you have the items necesary!";
+            }
+            TempData["Craftables"] = craftables;
+            return View(craftables);
         }
     }
 }

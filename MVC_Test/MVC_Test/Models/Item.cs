@@ -23,9 +23,13 @@ namespace MVC_Test.Models
             Durability = durability;
         }
 
-        public Item(string madeOf, Sql sql)
+        public Item()
         {
             MadeOf = new List<Item>();
+        }
+
+        public void LoadItems(string madeOf, Sql sql)
+        {
             int itemId = Convert.ToInt32(madeOf.Substring(0, 1));
             int amount = Convert.ToInt32(madeOf.Substring(2, 1));
             Item item = sql.LoadItem(itemId, amount);
