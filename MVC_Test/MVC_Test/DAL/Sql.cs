@@ -275,17 +275,17 @@ namespace MVC_Test.Models
             try
             {
                 string sql = "SELECT MadeOf, Name FROM Item WHERE MadeOf is not null";
-                string madeOf = "";
                 var cmd = new SqlCommand(sql, conn);
                 conn.Open();
                 List<Item> craftableItems = new List<Item>();
+                List<string> madeOf = new List<string>();
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {                  
                     if (reader.HasRows)
                     {
                         while (reader.Read())
                         {
-                            madeOf = reader[0].ToString();
+                            madeOf.Add(reader[0].ToString());
                             Item item = new Item();
                             item.Name = reader[1].ToString();
                             craftableItems.Add(item);
@@ -293,9 +293,9 @@ namespace MVC_Test.Models
                     }
                     conn.Close();
                 }
-                foreach (Item item in craftableItems)
+                for (int i = 0; i < craftableItems.Count; i++)
                 {
-                    item.LoadItems(madeOf, this);
+                    craftableItems[i].LoadItems(madeOf[i], this);
                 }
                 return craftableItems;
             }
@@ -314,13 +314,15 @@ namespace MVC_Test.Models
                     .Add(new SqlParameter("@id", SqlDbType.Int))
                     .Value = id;
                 conn.Open();
-                using(SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (reader.HasRows)
                     {
                         if (reader.Read())
                         {
-                            return new Item(reader[0].ToString(), reader[1].ToString(), Convert.ToInt32(reader[2]), Convert.ToBoolean(reader[3]), amount);
+                            Item item = new Item(reader[0].ToString(), reader[1].ToString(), Convert.ToInt32(reader[2]), Convert.ToBoolean(reader[3]), amount);
+                            conn.Close();
+                            return item;
                         }
                         else
                         {
@@ -331,8 +333,7 @@ namespace MVC_Test.Models
                     {
                         return null;
                     }
-
-                }
+                }               
             }
             catch { return null; }
         }

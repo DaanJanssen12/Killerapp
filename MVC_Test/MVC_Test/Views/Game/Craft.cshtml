@@ -22,13 +22,13 @@
                 {
                         <div class="row">
                             <div class="col-sm-2">@item.Name</div>
-                            <div class="col-sm-2">
-                            @foreach (Item i in item.MadeOf)
+                            @if (item.MadeOf != null)
                             {
-                                <p>@i.Name x @i.Durability</p>
-                            }
-                        </div>
-                        <div class="col-sm-2"><input type="submit" name="craft" value="Craft a @item.Name" /></div>
+                                
+                                <div class="col-sm-2">@item.MadeOf.Name x @item.MadeOf.Durability</div>
+                                
+                            } 
+                            <div class="col-sm-2"><input type="submit" name="craft" value="Craft a @item.Name" /></div>                          
                     </div>
                 }
             </div>

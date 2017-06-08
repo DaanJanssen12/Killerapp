@@ -158,18 +158,15 @@ namespace MVC_Test.Controllers
             {
                 if (item.Name == itemName)
                 {
-                    foreach (Item i in item.MadeOf)
-                    {
                         foreach (Item x in character.bag)
                         {
-                            if (i.Name == x.Name && x.Durability >= i.Durability)
+                            if (item.MadeOf.Name == x.Name && x.Durability >= item.MadeOf.Durability)
                             {
                                 craftable = true;
-                                x.Durability = x.Durability - i.Durability;
+                                x.Durability = x.Durability - item.MadeOf.Durability;
                                 craftItem = x;
                             }
                         }
-                    }
                 }
             }
             if(craftable == true)
