@@ -14,6 +14,7 @@ namespace MVC_Test.Models
         Druid
     }
 
+    //erft over van creature
     public class Character : Creature
     {
         public int CharacterId { get; set; }
@@ -62,6 +63,7 @@ namespace MVC_Test.Models
 
         public void GainXP(int xp, ISql sql)
         {
+            //geef het character xp en kijk of hij lvl up gaat
             sql.LoadStats(this);
             XP = XP + xp;
             double lvl = Math.Sqrt(XP);
@@ -77,6 +79,7 @@ namespace MVC_Test.Models
 
         public void LvlUp(int amount)
         {
+            //pas de stats aan aan de hand van de class en het aantal levels dat hij omhoog gaat
             switch (Class)
             {
                 case "Mage":

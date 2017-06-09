@@ -12,15 +12,17 @@ namespace MVC_Test.Controllers
         ISql sql = new Sql();
         Character character;
         Battle battle;
-        // GET: Game
+
         public ActionResult Index()
         {
+            //kijk of er een character is gekozen
             if (Session["Character"] == null)
             {
                 return RedirectToAction("Index", "Menu");
             }
             Session["Battle"] = null;
             character = (Character)Session["Character"];
+            //laad alle stats, items, moves van het character
             sql.LoadStats(character);
             sql.LoadBag(character);
             sql.LoadMoves(character);
@@ -31,6 +33,7 @@ namespace MVC_Test.Controllers
         [HttpGet]
         public ActionResult Battle()
         {
+            //check of er een character is en of er al een battle is
             if(Session["Character"] == null)
             {
                 return RedirectToAction("Index", "Menu");
@@ -41,6 +44,7 @@ namespace MVC_Test.Controllers
             }
             else
             {
+                //genereer een tegenstander en maak de battle
                 character = (Character)Session["Character"];
                 Random rng = new Random();
                 int minLvl = 2;
@@ -61,18 +65,22 @@ namespace MVC_Test.Controllers
         [HttpPost]
         public ActionResult Battle(string submit)
         {
+            //kijk welke handeling de gebruiker doet
             battle = (Battle)Session["Battle"];
             if (submit == "Run")
             {
+                //ren weg van het gevecht
                 battle.LoseDurability(sql);
                 return RedirectToAction("Index", "Game");
             }
             else if (submit == "Bag")
             {
+                //ga naar je bag
                 return RedirectToAction("BattleBag", "Game");
             }
             else
             {
+                //kijk wie er sneller is, die maakt zijn move eerst
                 if (battle.You.Spe > battle.Enemy.Spe)
                 {
                     battle.Move(battle.You, submit);
@@ -128,6 +136,7 @@ namespace MVC_Test.Controllers
         [HttpPost]
         public ActionResult BattleBag(string submit)
         {
+            //kijk welk item er gebruikt wordt
             battle = (Battle)Session["Battle"];
             if (submit != "Back to battle")
             {
@@ -141,6 +150,7 @@ namespace MVC_Test.Controllers
 
         public ActionResult Craft()
         {
+            //laad alle craftable items die beschickbaar zijn voor het character
             List<Item> craftableItems = sql.LoadCraftableItems((Character)Session["Character"]);
             TempData["Craftables"] = craftableItems;
             return View(craftableItems);
@@ -149,6 +159,7 @@ namespace MVC_Test.Controllers
         [HttpPost]
         public ActionResult Craft(string craft)
         {
+            //kijk welk item er wordt gecraft en check of dat ook kan
             character = (Character)Session["Character"];
             List<Item> craftables = (List<Item>)TempData["Craftables"];
             bool craftable = false;
@@ -170,6 +181,7 @@ namespace MVC_Test.Controllers
                         }
                 }
             }
+            //als het craften mogelijk is voer het dan uit, stuur anders een bericht terug dat het niet kan
             if(craftable == true)
             {
                 if (craftItem.Durability != 0)

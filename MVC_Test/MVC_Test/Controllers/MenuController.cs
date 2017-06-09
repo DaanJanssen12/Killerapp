@@ -13,10 +13,12 @@ namespace MVC_Test.Controllers
         // GET: Menu
         public ActionResult Index()
         {
+            //als de user in de sessie leeg is ga dan terug naar het login scherm
             if(Session["User"] == null)
             {
                 return RedirectToAction("Login", "User");
             }
+            //laad alle characters van de user
             User user = (User)Session["User"];
             user.loadCharacters(sql);
             Session["User"] = user;
@@ -59,10 +61,12 @@ namespace MVC_Test.Controllers
             }
             User user = (User)Session["User"];
 
+            //als de gebruiker klikte op een lege character slot ga dan naar het character aanmaakscherm
             if (submit == "New character")
             {
                 return RedirectToAction("NewCharacter", "Menu");
             }
+            //als de gebruiker klikte op een character laad deze dan en ga naar het home menu van de game
             else
             {
                 foreach (Character c in user.characters)

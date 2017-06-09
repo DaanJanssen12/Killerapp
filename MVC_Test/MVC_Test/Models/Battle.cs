@@ -33,6 +33,7 @@ namespace MVC_Test.Models
 
         public void StatsAfterItems()
         {
+            //update de stats van een character met de boosts van zijn items
             foreach (Item item in You.bag)
             {
                 if (item.Permanent == true)
@@ -67,6 +68,7 @@ namespace MVC_Test.Models
 
         public void Move(Character You, string submit)
         {
+            //kijk welke move er is gekozen en voer deze uit
             foreach (Move move in You.Moves)
             {
                 if (submit == move.Name)
@@ -100,6 +102,7 @@ namespace MVC_Test.Models
 
         public void Move(EvilCreature Enemy)
         {
+            //voer een van de 4 moves van de tegenstander uit
             Random rng = new Random();
             int i = rng.Next(0, Enemy.Moves.Count);
             Move move = Enemy.Moves[i];
@@ -113,6 +116,7 @@ namespace MVC_Test.Models
 
         public int DamageCalc(Creature offense, Creature defense, Move move)
         {
+            //bereken de damage die een move doet
             int atk = 0, def = 0;
 
             if (move.MoveType == "Physical")
@@ -134,6 +138,7 @@ namespace MVC_Test.Models
 
         public void UseItem(string itemName, ISql sql)
         {
+            //gebruik een item
             foreach (Item item in You.bag)
             {
                 if (item.Name == itemName)
@@ -143,6 +148,7 @@ namespace MVC_Test.Models
 
                     switch (stat)
                     {
+                        //geef de boost die het geselecteerde item geeft
                         case "HP":
                             YourHP = YourHP + amount;
                             if (YourHP > You.HP)
@@ -175,11 +181,13 @@ namespace MVC_Test.Models
 
         public void DropItem(ISql sql)
         {
+            //genereer een random item die wordt gedropd
             sql.DropBattleItem(You);
         }
 
         public void LoseDurability(ISql sql)
         {
+         //kijk hoeveel durability een item verliest
             foreach (Item i in You.bag)
             {
                 if (i.Permanent == true)
@@ -188,10 +196,12 @@ namespace MVC_Test.Models
                     i.Durability = i.Durability - amount;
                     if (i.Durability <= 0)
                     {
+                        //als de durability nu 0 of lager is delete het item
                         sql.DeleteItem(i, You);
                     }
                     else
                     {
+                        //verlaag de durability van het item
                         sql.LoseDurability(i, You);
                     }
                 }

@@ -31,6 +31,7 @@ namespace MVC_Test.Models
 
         public void LoadItems(string madeOf, Sql sql)
         {
+            //laad de items die nodig zijn om dit item te craften
             string[] itemProperties = madeOf.Split('x');
             MadeOf = sql.LoadItem(Convert.ToInt32(itemProperties[0]), Convert.ToInt32(itemProperties[1]));
         }

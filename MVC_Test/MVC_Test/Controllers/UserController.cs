@@ -26,6 +26,7 @@ namespace MVC_Test.Controllers
         [HttpPost]
         public ActionResult Login(User user)
         {
+            //check of de logindata correct is
             if (sql.Login(user.UserName, user.Password))
              {
                  FormsAuthentication.SetAuthCookie(user.UserName, user.RememberMe);
@@ -49,12 +50,15 @@ namespace MVC_Test.Controllers
         [HttpPost]
         public ActionResult Register(User user)
         {
+            //check of username en password niet leeg zijn
             if(user.UserName != null && user.Password != null)
             {
+                //check of er al een gebruiker is met de ingevulde naam
                 if(sql.UserExists(user.UserName) == true)
                 {
                     ViewBag.Message = "Er bestaat al een gebruiker met die naam!";
                 }
+                //zo niet creeer een nieuwe user
                 else
                 {
                     sql.CreateUser(user);
@@ -71,6 +75,7 @@ namespace MVC_Test.Controllers
 
         public ActionResult Logout()
         {
+            //uitloggen
             FormsAuthentication.SignOut();
             Session["User"] = null;
             Session["Character"] = null;

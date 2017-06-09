@@ -5,6 +5,7 @@ using System.Web;
 
 namespace MVC_Test.Models
 {
+    //abstracte classe creature
     public abstract class Creature
     {
         public int Atk { get; set; }
