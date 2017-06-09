@@ -152,7 +152,7 @@ namespace MVC_Test.Controllers
             character = (Character)Session["Character"];
             List<Item> craftables = (List<Item>)TempData["Craftables"];
             bool craftable = false;
-            Item craftItem = null;
+            Item craftItem = null, craftedItem = null;
             string itemName = craft.Substring(8);
             foreach (Item item in craftables)
             {
@@ -165,6 +165,7 @@ namespace MVC_Test.Controllers
                                 craftable = true;
                                 x.Durability = x.Durability - item.MadeOf.Durability;
                                 craftItem = x;
+                                craftedItem = item;
                             }
                         }
                 }
@@ -180,7 +181,7 @@ namespace MVC_Test.Controllers
                     sql.DeleteItem(craftItem, character);
                 }
                 TempData["CraftMessage"] = "You succesfully crafted a " + itemName;
-                sql.CraftItem(itemName, character);
+                sql.CraftItem(craftedItem.Id, character);
             }
             else
             {

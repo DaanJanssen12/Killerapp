@@ -274,7 +274,7 @@ namespace MVC_Test.Models
         {
             try
             {
-                string sql = "SELECT MadeOf, Name FROM Item WHERE MadeOf is not null";
+                string sql = "SELECT MadeOf, Name, ItemId FROM Item WHERE MadeOf is not null";
                 var cmd = new SqlCommand(sql, conn);
                 conn.Open();
                 List<Item> craftableItems = new List<Item>();
@@ -288,6 +288,7 @@ namespace MVC_Test.Models
                             madeOf.Add(reader[0].ToString());
                             Item item = new Item();
                             item.Name = reader[1].ToString();
+                            item.Id = (Int32)reader[2];
                             craftableItems.Add(item);
                         }
                     }
@@ -358,15 +359,15 @@ namespace MVC_Test.Models
             conn.Close();
         }
 
-        public void CraftItem(string item, Character c)
+        public void CraftItem(int id, Character c)
         {
             try
             {
                 string sql = @"CraftItem @item, @id";
                 var cmd = new SqlCommand(sql, conn);
                 cmd.Parameters
-                    .Add(new SqlParameter("@item", SqlDbType.VarChar))
-                    .Value = item;
+                    .Add(new SqlParameter("@item", SqlDbType.Int))
+                    .Value = id;
                 cmd.Parameters
                     .Add(new SqlParameter("@id", SqlDbType.Int))
                     .Value = c.CharacterId;

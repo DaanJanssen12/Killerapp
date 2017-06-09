@@ -25,7 +25,7 @@ namespace MVC_Test.Models
         //Item
         List<Item> LoadCraftableItems();
         Item LoadItem(int id, int amount);
-        void CraftItem(string item, Character c);
+        void CraftItem(int id, Character c);
         void DropBattleItem(Character c);
         void UseBattleItem(string item, Character c);
         void LoseDurability(Item i, Character c);

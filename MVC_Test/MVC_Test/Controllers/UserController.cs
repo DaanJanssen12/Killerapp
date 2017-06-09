@@ -72,6 +72,8 @@ namespace MVC_Test.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
+            Session["User"] = null;
+            Session["Character"] = null;
             return RedirectToAction("Index", "Home");
         }
     }
