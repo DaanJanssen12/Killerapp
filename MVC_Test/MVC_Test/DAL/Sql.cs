@@ -220,6 +220,7 @@ namespace MVC_Test.Models
                         }
                     }
                 }
+                conn.Close();
             }
             catch { }           
         }
@@ -499,6 +500,7 @@ namespace MVC_Test.Models
                         }
                     }
                 }
+                conn.Close();
             }
             catch { }
         }
