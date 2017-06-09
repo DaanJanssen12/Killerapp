@@ -20,6 +20,8 @@ namespace MVC_Test.Models
 
         public bool Login(string username, string password)
         {
+            try
+            {
                 string sql = @"SELECT [UserId],[Username],[Password] FROM [User] " +
                        @"WHERE [Username] = @u AND [Password] = @p";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -45,10 +47,15 @@ namespace MVC_Test.Models
                     conn.Close();
                     return false;
                 }
+            }
+            catch { return false; }
+                
         }
 
         public bool UserExists(string username)
         {
+            try
+            {
                 string sql = @"SELECT [Username] FROM [User] " +
                        @"WHERE [Username] = @u";
                 var cmd = new SqlCommand(sql, conn);
@@ -71,10 +78,15 @@ namespace MVC_Test.Models
                     conn.Close();
                     return false;
                 }
+            }
+            catch { return false; }
+                
         }
 
         public int GetUserId(string username)
         {
+            try
+            {
                 string sql = @"SELECT [UserId] FROM [User] " +
                        @"WHERE [Username] = @u";
                 SqlCommand cmd = new SqlCommand(sql, conn);
@@ -94,6 +106,9 @@ namespace MVC_Test.Models
                     conn.Close();
                     return 505;
                 }
+            }
+            catch { return 505; }
+                
         }
 
         public void CreateUser(User user)
@@ -118,7 +133,9 @@ namespace MVC_Test.Models
 
         public void LoadCharacters(User user)
         {
-            user.characters.Clear();
+            try
+            {
+                user.characters.Clear();
                 string sql = @"SELECT [CharacterId], [Name], [Gender], [Class] FROM Character " +
                        @"WHERE [UserId] = @id";
                 var cmd = new SqlCommand(sql, conn);
@@ -126,21 +143,23 @@ namespace MVC_Test.Models
                     .Add(new SqlParameter("@id", SqlDbType.Int))
                     .Value = user.Id;
                 conn.Open();
-                SqlDataReader reader = cmd.ExecuteReader();
-                if (reader.HasRows)
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.HasRows)
                     {
-                        int id = Convert.ToInt32(reader[0]);
-                        string name = reader[1].ToString();
-                        string gender = reader[2].ToString();
-                        string Class = reader[3].ToString();
-                        user.characters.Add(new Character(user, id, name, Class, gender));
+                        while (reader.Read())
+                        {
+                            int id = Convert.ToInt32(reader[0]);
+                            string name = reader[1].ToString();
+                            string gender = reader[2].ToString();
+                            string Class = reader[3].ToString();
+                            user.characters.Add(new Character(user, id, name, Class, gender));
+                        }
                     }
-                }
-                reader.Dispose();
-                cmd.Dispose();
-            conn.Close();
+                }                  
+            }
+            catch { }
+            
         }
 
         public bool CreateCharacter(User user, Character character)
@@ -175,69 +194,76 @@ namespace MVC_Test.Models
 
         public void LoadStats(Character c)
         {
-            string sql = @"SELECT* FROM Stats " +
-                       @"WHERE [CharacterId] = @id";
-            var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters
-                .Add(new SqlParameter("@id", SqlDbType.Int))
-                .Value = c.CharacterId;
-            conn.Open();
-            SqlDataReader reader = cmd.ExecuteReader();
-            if (reader.HasRows)
+            try
             {
-                while (reader.Read())
+                string sql = @"SELECT* FROM Stats " +
+                       @"WHERE [CharacterId] = @id";
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@id", SqlDbType.Int))
+                    .Value = c.CharacterId;
+                conn.Open();
+                using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    c.Atk = Convert.ToInt32(reader[1]);
-                    c.Def = Convert.ToInt32(reader[2]);
-                    c.SpAtk = Convert.ToInt32(reader[3]);
-                    c.SpDef = Convert.ToInt32(reader[4]);
-                    c.Spe = Convert.ToInt32(reader[5]);
-                    c.HP = Convert.ToInt32(reader[6]);
-                    c.XP = Convert.ToInt32(reader[7]);
-                    c.Lvl = Convert.ToInt32(reader[8]);
+                    if (reader.HasRows)
+                    {
+                        while (reader.Read())
+                        {
+                            c.Atk = Convert.ToInt32(reader[1]);
+                            c.Def = Convert.ToInt32(reader[2]);
+                            c.SpAtk = Convert.ToInt32(reader[3]);
+                            c.SpDef = Convert.ToInt32(reader[4]);
+                            c.Spe = Convert.ToInt32(reader[5]);
+                            c.HP = Convert.ToInt32(reader[6]);
+                            c.XP = Convert.ToInt32(reader[7]);
+                            c.Lvl = Convert.ToInt32(reader[8]);
+                        }
+                    }
                 }
             }
-            reader.Dispose();
-            cmd.Dispose();
-            conn.Close();
+            catch { }           
         }
 
         public void UpdateStats(Character c)
         {
-            string sql = "Update Stats " +
+            try
+            {
+                string sql = "Update Stats " +
                 "Set HP = @HP, Atk = @Atk, Def = @Def, SpAtk = @SpAtk, SpDef = @SpDef, Spe = @Spe, XP = @XP, Lvl = @Lvl" +
                 " Where CharacterId = @id";
-            var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters
-                .Add(new SqlParameter("@HP", SqlDbType.Int))
-                .Value = c.HP;
-            cmd.Parameters
-                .Add(new SqlParameter("@Atk", SqlDbType.Int))
-                .Value = c.Atk;
-            cmd.Parameters
-                .Add(new SqlParameter("@Def", SqlDbType.Int))
-                .Value = c.Def;
-            cmd.Parameters
-                .Add(new SqlParameter("@SpAtk", SqlDbType.Int))
-                .Value = c.SpAtk;
-            cmd.Parameters
-                .Add(new SqlParameter("@SpDef", SqlDbType.Int))
-                .Value = c.SpDef;
-            cmd.Parameters
-                .Add(new SqlParameter("@Spe", SqlDbType.Int))
-                .Value = c.Spe;
-            cmd.Parameters
-                .Add(new SqlParameter("@XP", SqlDbType.Int))
-                .Value = c.XP;
-            cmd.Parameters
-                .Add(new SqlParameter("@Lvl", SqlDbType.Int))
-                .Value = c.Lvl;
-            cmd.Parameters
-                .Add(new SqlParameter("@id", SqlDbType.Int))
-                .Value = c.CharacterId;
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@HP", SqlDbType.Int))
+                    .Value = c.HP;
+                cmd.Parameters
+                    .Add(new SqlParameter("@Atk", SqlDbType.Int))
+                    .Value = c.Atk;
+                cmd.Parameters
+                    .Add(new SqlParameter("@Def", SqlDbType.Int))
+                    .Value = c.Def;
+                cmd.Parameters
+                    .Add(new SqlParameter("@SpAtk", SqlDbType.Int))
+                    .Value = c.SpAtk;
+                cmd.Parameters
+                    .Add(new SqlParameter("@SpDef", SqlDbType.Int))
+                    .Value = c.SpDef;
+                cmd.Parameters
+                    .Add(new SqlParameter("@Spe", SqlDbType.Int))
+                    .Value = c.Spe;
+                cmd.Parameters
+                    .Add(new SqlParameter("@XP", SqlDbType.Int))
+                    .Value = c.XP;
+                cmd.Parameters
+                    .Add(new SqlParameter("@Lvl", SqlDbType.Int))
+                    .Value = c.Lvl;
+                cmd.Parameters
+                    .Add(new SqlParameter("@id", SqlDbType.Int))
+                    .Value = c.CharacterId;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch { }          
         }
 
         public void LoadBag(Character c)
@@ -347,22 +373,26 @@ namespace MVC_Test.Models
 
         public void LoseDurability(Item i, Character c)
         {
-            string sql = "Update Bag " +
+            try
+            {
+                string sql = "Update Bag " +
                 "Set Durability = @Durability" +
                 " Where CharacterId = @id AND ItemId = (SELECT ItemId FROM Item WHERE Name = @item)";
-            var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters
-                .Add(new SqlParameter("@Durability", SqlDbType.Int))
-                .Value = i.Durability;
-            cmd.Parameters
-                .Add(new SqlParameter("@id", SqlDbType.Int))
-                .Value = c.CharacterId;
-            cmd.Parameters
-                .Add(new SqlParameter("@item", SqlDbType.VarChar))
-                .Value = i.Name;
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@Durability", SqlDbType.Int))
+                    .Value = i.Durability;
+                cmd.Parameters
+                    .Add(new SqlParameter("@id", SqlDbType.Int))
+                    .Value = c.CharacterId;
+                cmd.Parameters
+                    .Add(new SqlParameter("@item", SqlDbType.VarChar))
+                    .Value = i.Name;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch { }           
         }
 
         public void CraftItem(int id, Character c)
@@ -387,18 +417,22 @@ namespace MVC_Test.Models
 
         public void DeleteItem(Item i, Character c)
         {
-            string sql = "DELETE FROM Bag " +
-                " Where CharacterId = @id AND ItemId = (SELECT ItemId FROM Item WHERE Name = @item)";
-            var cmd = new SqlCommand(sql, conn);
-            cmd.Parameters
-                .Add(new SqlParameter("@id", SqlDbType.Int))
-                .Value = c.CharacterId;
-            cmd.Parameters
-                .Add(new SqlParameter("@item", SqlDbType.VarChar))
-                .Value = i.Name;
-            conn.Open();
-            cmd.ExecuteNonQuery();
-            conn.Close();
+            try
+            {
+                string sql = "DELETE FROM Bag " +
+                                " Where CharacterId = @id AND ItemId = (SELECT ItemId FROM Item WHERE Name = @item)";
+                var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@id", SqlDbType.Int))
+                    .Value = c.CharacterId;
+                cmd.Parameters
+                    .Add(new SqlParameter("@item", SqlDbType.VarChar))
+                    .Value = i.Name;
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch { }
         }
 
         public void DropBattleItem(Character c)

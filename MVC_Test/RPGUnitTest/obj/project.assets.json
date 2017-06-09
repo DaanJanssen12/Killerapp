@@ -2819,6 +2819,9 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
+      },
+      "MVC_Test/1.0.0": {
+        "type": "project"
       }
     }
   },
@@ -8519,12 +8522,18 @@
         "system.xml.xpath.xmldocument.4.0.1.nupkg.sha512",
         "system.xml.xpath.xmldocument.nuspec"
       ]
+    },
+    "MVC_Test/1.0.0": {
+      "type": "project",
+      "path": "../MVC_Test/MVC_Test.csproj",
+      "msbuildProject": "../MVC_Test/MVC_Test.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v1.1": [
       "MSTest.TestAdapter >= 1.1.11",
       "MSTest.TestFramework >= 1.1.11",
+      "MVC_Test >= 1.0.0",
       "Microsoft.NET.Test.Sdk >= 15.0.0",
       "Microsoft.NETCore.App >= 1.1.1"
     ]
@@ -8545,7 +8554,11 @@
       ],
       "frameworks": {
         "netcoreapp1.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\GEbruiker\\Documents\\Killerapp\\MVC_Test\\MVC_Test\\MVC_Test.csproj": {
+              "projectPath": "C:\\Users\\GEbruiker\\Documents\\Killerapp\\MVC_Test\\MVC_Test\\MVC_Test.csproj"
+            }
+          }
         }
       }
     },
