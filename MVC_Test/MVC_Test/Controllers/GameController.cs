@@ -141,7 +141,7 @@ namespace MVC_Test.Controllers
 
         public ActionResult Craft()
         {
-            List<Item> craftableItems = sql.LoadCraftableItems();
+            List<Item> craftableItems = sql.LoadCraftableItems((Character)Session["Character"]);
             TempData["Craftables"] = craftableItems;
             return View(craftableItems);
         }

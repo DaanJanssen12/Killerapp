@@ -270,12 +270,18 @@ namespace MVC_Test.Models
             
         }
 
-        public List<Item> LoadCraftableItems()
+        public List<Item> LoadCraftableItems(Character c)
         {
             try
             {
-                string sql = "SELECT MadeOf, Name, ItemId FROM Item WHERE MadeOf is not null";
+                string sql = @"SELECT MadeOf, Name, ItemId FROM Item WHERE MadeOf is not null AND Lvl <= @lvl AND (Class = @class or Class is null)";
                 var cmd = new SqlCommand(sql, conn);
+                cmd.Parameters
+                    .Add(new SqlParameter("@lvl", SqlDbType.Int))
+                    .Value = c.Lvl;
+                cmd.Parameters
+                    .Add(new SqlParameter("@class", SqlDbType.VarChar))
+                    .Value = c.Class;
                 conn.Open();
                 List<Item> craftableItems = new List<Item>();
                 List<string> madeOf = new List<string>();

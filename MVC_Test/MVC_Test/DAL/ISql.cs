@@ -23,7 +23,7 @@ namespace MVC_Test.Models
         void UpdateStats(Character c);
 
         //Item
-        List<Item> LoadCraftableItems();
+        List<Item> LoadCraftableItems(Character c);
         Item LoadItem(int id, int amount);
         void CraftItem(int id, Character c);
         void DropBattleItem(Character c);
